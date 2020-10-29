@@ -20,10 +20,7 @@ const MyCourses = () => {
        
      }
   return(
-    <View style={{ Height: "auto", maxHeight: screenHeight}}>
-  <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
-  
-        
+    <View >
       <Text h3 style={{marginRight:10,marginTop:10}}>מלמד:</Text>
       <TouchableOpacity 
       onPress={() => setIsPressed(isPressed => !isPressed)}
@@ -46,8 +43,6 @@ const MyCourses = () => {
                  {item.item.title}</Chip>)}}
                   keyExtractor={item=>item.title}/>
   </View>
-  
-  </ScrollView>
   </View>
 
   )
