@@ -8,9 +8,9 @@ import UserCard from '../components/UserCard';
 const Account = () => {
 return (<SafeAreaView forceInset={{top:"always"}} style={styles.container}>
 
-           <Text style={{fontWeight:"bold",fontSize:48,justifyContent:"center",textAlign:'center'}}>Account</Text>
+           {/* <Text style={{fontWeight:"bold",fontSize:48,justifyContent:"center",textAlign:'center'}}>Account</Text> */}
             <UserCard />
-            <ChooseType/>
+            {/* <ChooseType/> */}
                   
        </SafeAreaView>)
 };

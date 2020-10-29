@@ -8,7 +8,6 @@ const Examples =() =>{
     const [layout,setLayout]=useState(false);
     const [crop,setCrop]=useState(false);
     const [uri,setUri]=useState('https://s3.amazonaws.com/uifaces/faces/twitter/adhamdannaway/128.jpg')
-    const [index,setIndex]=useState(null);
     useEffect(() => {
         (async () => {
           if (Platform.OS !== 'web') {
@@ -64,10 +63,10 @@ const Examples =() =>{
             onPictureChoosed={ ({  uri: uriM }) => setUri(uriM)}
             onToggleModal={onToggleModal}
         />
-    <View style={{alignSelf:'center', marginVertical:60}}>
+    <View style={{alignSelf:'center', marginVertical:30}}>
     <Avatar size="xlarge"  rounded onPress={toggleOverlay}
     source={{uri: uri,}} />
-    <Text h4 style={{marginRight:10,fontFamily:'sans-serif-light'}}>niv cohen</Text> 
+    <Text h4 style={{marginRight:10,fontFamily:'sans-serif-light',fontSize:20,fontWeight:'bold'}}>Niv Cohen</Text> 
     </View>
     <Overlay isVisible={layout} onBackdropPress={toggleOverlay} overlayStyle={{width:300,height:400}}>
     <Avatar size="large" containerStyle={{alignSelf:"center",marginBottom:20}} rounded onPress={toggleOverlay}
