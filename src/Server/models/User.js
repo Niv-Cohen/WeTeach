@@ -13,27 +13,12 @@ const userSchema = new mongoose.Schema({
         required:true
     }
     ,
-    name:{
-        type:String
-    },
-    Student:{
-        type:Boolean
-    },
-    // Concepts:{
-    //     type:[Course]
-    // },
-    // Teacher:{
-    //     type:Boolean
-    // },
-    // Courses:{
-    //     type:[Course]
-    // },
-    // img:{
-    //     type:String
-    // },
-    about:{
-        type:String
-    }
+    name:String,
+    // Concepts:[subjects],
+    // Courses:[Course],
+    img:String,
+    about:String,
+    img:String
 })
 
 userSchema.pre('save',function(next){
