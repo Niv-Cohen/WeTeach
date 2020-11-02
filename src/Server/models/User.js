@@ -1,6 +1,9 @@
 
 const mongoose = require('mongoose');
-const bcrypt = require('bcrypt')
+const bcrypt = require('bcrypt');
+const Subject = require('./Subject');
+const Course = require('./Course');
+
 
 const userSchema = new mongoose.Schema({
     email:{
@@ -14,8 +17,16 @@ const userSchema = new mongoose.Schema({
     }
     ,
     name:String,
-    // Concepts:[subjects],
-    // Courses:[Course],
+    subjects:{
+        type:[mongoose.Schema.Types.ObjectId],
+        ref:'Subject',
+        default:[]
+    },
+    courses:{
+        type:[mongoose.Schema.Types.ObjectId],
+        ref:'course',
+        default:[]
+    },
     img:String,
     about:String,
     img:String

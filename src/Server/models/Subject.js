@@ -11,7 +11,8 @@ const subjectScema = mongoose.Schema({
         required:true
     },
     subs:{
-        type:[String]
+        type:[String],
+        default:[]
     }
 })
 
