@@ -5,18 +5,18 @@ const mongoose = require('mongoose')
 const bodyParser = require('body-parser')
 const authRoutes = require('./routes/authRoutes')
 const requireAuth = require('./middlewares/requireAuth')
+require('dotenv').config();
 
 //Start App
 let app = express();
-
 app.use(bodyParser.json())
-app.use(authRoutes);
+//app.use(authRoutes);
+const subjects = require('./routes/subjects');
+app.use('/subjects',subjects);
 
-const mongouri = 'mongodb+srv://Nivos_co:Nfn151294Nfn@cluster0.dx0zj.gcp.mongodb.net/DB?retryWrites=true&w=majority'
-mongoose.connect(mongouri,{
+const mongouri = mongoose.connect(process.env.DB_CONNECTION,{
     useNewUrlParser:true,
-    useCreateIndex:true
-});
+    useCreateIndex:true});
 
  mongoose.connection.on('connected',()=>console.log('connected in to mongo instance'));
  mongoose.connection.on('error',(err)=>console.error('error connecting Help',err));
@@ -27,8 +27,13 @@ var port =  3000;
 
 
 // Welcome message
-app.get('/', requireAuth,(req, res) => {
-    res.send(`Your email is: ${req.user.email}`)
+// app.get('/', requireAuth,(req, res) => {
+//     res.send(`Your email is: ${req.user.email}`)
+// }
+// );
+
+app.get('/',(req, res) => {
+    res.send(`Hi there!`)
 }
 );
 
