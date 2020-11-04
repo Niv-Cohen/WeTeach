@@ -26,7 +26,7 @@ const userReducer = (state,action) =>{
             console.log(_id)
             const response = await UserApi.put(`/users/${_id}`,{_id,params});
             console.log(response.data)
-            dispatch({type:'edit_user', payload: response.data.foundObject})
+            dispatch({type:'edit_user', payload: response.data.user})
         }catch(err){
             dispatch({type:'add_err', payload:'Something went wrong'})
             console.log(err.message)

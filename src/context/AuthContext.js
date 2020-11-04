@@ -3,8 +3,6 @@ import UserApi from '../api/Users'
 import {AsyncStorage} from 'react-native'
 import {navigate} from '../NavigationRef'
 
-
-
 const authReducer = (state,action) =>{
     switch(action.type){
         case 'add_err':
