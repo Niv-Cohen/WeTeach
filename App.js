@@ -1,5 +1,5 @@
 
-import React ,{useEffect}from 'react';
+import React from 'react';
 import {createAppContainer,createSwitchNavigator} from 'react-navigation'
 import { createStackNavigator} from 'react-navigation-stack';
 import { BottomTabBar, createBottomTabNavigator} from 'react-navigation-tabs'
@@ -12,11 +12,12 @@ import TryLocalSignin from './src/screens/TryLocalSignin';
 import LessonsPannel from './src/screens/LessonsPannel';
 import ConceptTeaching from './src/screens/ConceptTeaching';
 import example from './src/components/Examples';
-
+import setup from './src/screens/Setup';
+import { LogBox } from 'react-native';
 
 import {Provider as AuthProvider} from './src/context/AuthContext'
-
-
+import {Provider as UserProvider} from './src/context/UserContext'
+LogBox.ignoreAllLogs(true)
 const switchNavigator = createSwitchNavigator({
     TryLocalSignin:TryLocalSignin,
     loginFlow:createStackNavigator({
@@ -33,32 +34,24 @@ const switchNavigator = createSwitchNavigator({
         }
    }),
    mainFlow:createBottomTabNavigator({
-    
-      
+      setup:setup,
       Concept:{screen:ConceptTeaching},
       Lessons:{screen:LessonsPannel},
       Account:{screen: Account,title:'משתמש'},
-      //example:{screen:example}
    },
    {
-    //  tabBarOptions:{activeTintColor: "#00af9d",
-    //  inactiveTintColor: "grey",
-    //  style: {
-    //    backgroundColor: "white",
-    //    paddingTop: 10
-    //  }
-    // },
     initialRouteName:'Account',
     navigationOptions:{ header: { visible: false }
     }
    })
 });
  const App = createAppContainer(switchNavigator)
-
  export default () =>{
    return(
+    <UserProvider>
      <AuthProvider>
        <App ref={(navigator)=>setNavigator(navigator)} />
      </AuthProvider>
+     </UserProvider>
    )
  }

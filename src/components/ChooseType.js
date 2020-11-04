@@ -4,7 +4,6 @@ import { Text, Button, Input } from 'react-native-elements';
 import { FlatList } from 'react-native-gesture-handler';
 import { FontAwesome,FontAwesome5 } from '@expo/vector-icons';
 
-
 const ChooseType = () =>{
     const [userType, setUserType] = useState(0);
     const Types =[{name:'Student',icon:'graduation-cap',src:FontAwesome},{name:'Tutor',icon:'chalkboard-teacher',src:FontAwesome5},{name:'Both',icon:'user-graduate', src:FontAwesome5}];

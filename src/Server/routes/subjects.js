@@ -2,7 +2,6 @@ const express = require('express');
 const router = express.Router();
 const Subject = require('../models/Subject');
 
-
 router.get('/',(req,res)=>{
     res.send('it works')
 })

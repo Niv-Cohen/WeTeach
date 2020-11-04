@@ -1,7 +1,5 @@
 import React , { useContext } from 'react';
 import {View,Text,StyleSheet} from 'react-native'
-
-
 import AuthForm from '../components/AuthForm'
 import {Context as AuthContext} from '../context/AuthContext'
 import NavLink from '../components/NavLink'

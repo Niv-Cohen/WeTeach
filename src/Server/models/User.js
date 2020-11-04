@@ -16,7 +16,7 @@ const userSchema = new mongoose.Schema({
         required:true
     }
     ,
-    name:String,
+    name:{type:String,default:''},
     subjects:{
         type:[mongoose.Schema.Types.ObjectId],
         ref:'Subject',
@@ -27,9 +27,8 @@ const userSchema = new mongoose.Schema({
         ref:'course',
         default:[]
     },
-    img:String,
-    about:String,
-    img:String
+    img:{type:String,default:''},
+    about:{type:String,default:''}
 })
 
 userSchema.pre('save',function(next){

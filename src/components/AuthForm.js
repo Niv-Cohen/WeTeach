@@ -4,10 +4,13 @@ import { StyleSheet } from 'react-native';
 import { Text, Button, Input } from 'react-native-elements';
 import { NavigationEvents } from 'react-navigation';
 import Spacer from './Spacer';
-
+import { LogBox } from 'react-native';
 const AuthForm = ({buttonText,onPress,errMessage,clearErrMsg}) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  useEffect(()=>{
+    LogBox.ignoreAllLogs(true)
+  },[])
   return (
     <>
       <Spacer>

@@ -9,8 +9,7 @@ import { LogBox } from 'react-native';
 
 
 const MyCourses = () => {
-    LogBox.ignoreLogs(['Warning: ...']); // Ignore log notification by message
-    LogBox.ignoreAllLogs();
+    LogBox.ignoreAllLogs(true);
     const courses = [{title:'Data Structures'},{title:'אלגברה 1'},{title:'אלגברה 2'},{title:'מבוא למדעי המחשב'},{title:'מערכות ספרתיות'},{title:'תכנות מערכות'},{title:'אלגברה לינארית'},{title:'אינפי 1'},{title:'אינפי 2'},{title:'אינפי 3'}]
     const subject = [{title:'AVL'},{title:'Binary Tree'},{title:'Linear-Search'},{title:'Big O'},{title:'Object Oriented'},{title:'Recursion'}]
     const [subjects,setSubjects]=useState(subject)
@@ -24,8 +23,7 @@ const MyCourses = () => {
     <View>
       <Text h3 style={{marginRight:10,marginTop:10}}>מלמד:</Text>
       <TouchableOpacity 
-      onPress={() => setIsPressed(isPressed => !isPressed)}
-       >
+      onPress={() => setIsPressed(isPressed => !isPressed)}>
       <View >
       <Text h3 style={{color:'black',fontSize:18,textAlign:'left'}}>עדכן</Text>
       </View>
@@ -35,7 +33,7 @@ const MyCourses = () => {
         <FlatList 
          contentContainerStyle={{flex:1, flexWrap:'wrap', flexDirection: 'row', alignItems: 'center',alignSelf:'stretch', justifyContent: 'flex-start'}}
           data={course} renderItem={item=>{
-            return(<><Chip ref={item}
+            return(<><Chip
                style={{marginVertical:10,marginHorizontal:0.5}}
               onPress ={isPressed?() => togglePress(item):()=>setLayoutVisible(true)}
               icon={isPressed&&"close-circle"}
@@ -44,7 +42,7 @@ const MyCourses = () => {
                  {item.item.title}</Chip>
                  </>)}}
                   keyExtractor={item=>item.title}/>
-                  <Overlay isVisible={layoutVisible} animationType='zoomIn' style={{al}} onBackdropPress={()=>setLayoutVisible(false)} overlayStyle={{width:300,height:400}}>
+                  <Overlay isVisible={layoutVisible} animationType='zoomIn' onBackdropPress={()=>setLayoutVisible(false)} overlayStyle={{width:300,height:400}}>
                   <FlatList data={subjects} 
                   renderItem={item=>{return(<Text>{item.item.title} </Text>)}}
                    keyExtractor={item=>item.title} />

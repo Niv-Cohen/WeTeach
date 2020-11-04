@@ -4,10 +4,17 @@ import { ImageManipulator } from 'expo-image-crop';
 import * as ImagePicker from 'expo-image-picker';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import { Avatar, Overlay,Button,ButtonGroup } from 'react-native-elements';
-const Examples =() =>{
+import S3 from "aws-sdk/clients/s3";
+import { Credentials, Endpoint } from "aws-sdk";
+import { v4 as uuid } from "uuid";
+import { RNS3 } from 'react-native-aws3';
+
+
+const ProfileImage =({name,editPhoto}) =>{
     const [layout,setLayout]=useState(false);
     const [crop,setCrop]=useState(false);
     const [uri,setUri]=useState('https://s3.amazonaws.com/uifaces/faces/twitter/adhamdannaway/128.jpg')
+
     useEffect(() => {
         (async () => {
           if (Platform.OS !== 'web') {
@@ -34,15 +41,33 @@ const Examples =() =>{
           allowsEditing: true,
           aspect: [4, 3],
           quality: 1,
-        });
-    
+        })
+         // editPhoto()
+        
+        // ,(response)=>{
+        //   const file ={
+        //     uri: response.uri,
+        //     name:response.fileName,
+        //     type: 'image/png'
+        //   }
+        //   console.log(file)
+        //   const config = {
+        //     keyPrefix: 's3/',
+        //     bucket:'weteachapp',
+        //     region:process.env.S3_REGION,
+        //     accessKey:process.env.AWS_KEY_ID,
+        //     secretKet:process.env.AWS_SECRET
+        //   }
+        //   RNS3.put(file,config).then((response)=>console.log(response))
+        
+      
         console.log(result);
     
         if (!result.cancelled) {
           setImage(result.uri);
         }
       };
-
+    
     const takePhoto = ()=>{
 
     }
@@ -66,7 +91,7 @@ const Examples =() =>{
     <View style={{alignSelf:'center', marginVertical:30}}>
     <Avatar size="xlarge"  rounded onPress={toggleOverlay}
     source={{uri: uri,}} />
-    <Text h4 style={{marginRight:10,fontFamily:'sans-serif-light',fontSize:20,fontWeight:'bold'}}>Niv Cohen</Text> 
+    <Text h4 style={{marginRight:10,fontFamily:'sans-serif-light',fontSize:20,fontWeight:'bold'}}>{name}</Text> 
     </View>
     <Overlay isVisible={layout} onBackdropPress={toggleOverlay} overlayStyle={{width:300,height:400}}>
     <Avatar size="large" containerStyle={{alignSelf:"center",marginBottom:20}} rounded onPress={toggleOverlay}
@@ -82,10 +107,7 @@ const Examples =() =>{
     </Overlay>
     </View>
     )
-
-}
-
-
+        }
 
 
 
@@ -98,4 +120,4 @@ const style =StyleSheet.create({
 
 })
 
-export default Examples
+export default ProfileImage

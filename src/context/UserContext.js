@@ -1,32 +1,36 @@
 import createDataContext from './createDataContext';
 import UserApi from '../api/Users'
-import {navigate} from '../NavigationRef'
 
 const userReducer = (state,action) =>{
     switch(action.type){
+        case 'edit_User':
+            return{...state,user:action.payload}
+        case 'set_user':
+            return{...state,user:action.payload}
         case 'add_err':
             return { ...state ,errMessage: action.payload}
-        case 'changePhoto':
-            return {...state,img:action.payload}
         case 'clear_err':
             return {...state , errMessage:action.payload}
-        case 'signout':
-            return { token: null, errorMessage: '' };
         default:
             return state;
     }
 };
 
-const changePhoto = dispatch => async ({img}) => {
+    const setUser = dispatch => async({user})=>{
+        dispatch({type:'set_user',payload:user})
+    }
+
+    const editUser = dispatch => async ({_id,params}) => {
         try{
-            const response = await UserApi.put('/update',{img});
-            dispatch({type:'changePhoto', payload: img})
-            console.log('changed Personal photo')
+            console.log(params)
+            console.log(_id)
+            const response = await UserApi.put(`/users/${_id}`,{_id,params});
+            console.log(response.data)
+            dispatch({type:'edit_user', payload: response.data.foundObject})
         }catch(err){
             dispatch({type:'add_err', payload:'Something went wrong'})
+            console.log(err.message)
         }
     }
 
-
-
-export const {Provider, Context} = createDataContext(authReducer,{signin,signout,signup,clearErrMsg,tryLocalSignin},{token:null,errMessage:''})
+export const {Provider, Context} = createDataContext(userReducer,{setUser,editUser},{user:null,errMessage:''})
