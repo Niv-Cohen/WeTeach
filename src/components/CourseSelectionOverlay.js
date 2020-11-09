@@ -1,6 +1,6 @@
 import  React,{useState} from 'react';
 import {View,FlatList,ScrollView,TouchableOpacity} from 'react-native'
-import {Text,Button,Overlay} from 'react-native-elements';
+import {Text,Button} from 'react-native-elements';
 import { Chip, overlay } from 'react-native-paper';
 import Spacer from './Spacer';
 
@@ -25,7 +25,6 @@ const CourseSelectionOverlay = () => {
     }
 
   return <>
-  <Overlay isVisible={true}>
     <View>
           <FlatList
           contentContainerStyle={{flex:1, flexWrap:'wrap', flexDirection: 'row', alignItems: 'center',alignSelf:'stretch', justifyContent: 'flex-start'}}
@@ -55,7 +54,6 @@ const CourseSelectionOverlay = () => {
                 }}
             keyExtractor={item=>item.key}/>  
       </View>
-  </Overlay>
   </>
   
 };

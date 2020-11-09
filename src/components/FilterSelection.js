@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { View, FlatList, Dimensions, TouchableOpacity, StyleSheet } from 'react-native'
-import { Text, Button, Overlay } from 'react-native-elements';
+import { Text, Button } from 'react-native-elements';
 import { Chip, overlay, TextInput } from 'react-native-paper';
 import {Feather} from '@expo/vector-icons'
 import Spacer from './Spacer';
@@ -8,10 +8,9 @@ import SearchBar from './SearchBar';
 
 
 
-const FilterSelection = ({dataToFilter}) => {
+const FilterSelection = ({dataToFilter,intialData, selectedItem, setSelectedItem, onFinish}) => {
 
-    const [filteredData, setfilteredData] = useState(dataToFilter);
-    const [selectedItem, setSelectedItem] = useState("");
+    const [filteredData, setfilteredData] = useState(intialData);
 
     const filterData = (filter) => {
         setfilteredData(dataToFilter.filter((other) => other.includes(filter)))
@@ -23,13 +22,13 @@ const FilterSelection = ({dataToFilter}) => {
             fontSize: 16,
             borderColor: 'black',
             fontWeight: item===selectedItem?'bold':'normal',
-            borderWidth:item===selectedItem? 2:1,
+            borderWidth: item===selectedItem? 2:1,
             padding: 5
         }
     }
 
     return <>
-    <Overlay isVisible={true} fullScreen={true}>
+    <View style={{height:'95%'}}>
     <View style={styles.backgroundStyle}>
       <Feather name="search" style={styles.iconStyle} />
       <TextInput
@@ -53,8 +52,8 @@ const FilterSelection = ({dataToFilter}) => {
             );
         }}
     />
-    {selectedItem?<Button title="בחרתי" onPress={()=>{Overlay.isVisible=false}}/>:null}
-    </Overlay>
+    </View>
+    {selectedItem?<Button title="בחרתי"onPress={onFinish}/>:null}
     </>
 
 };
