@@ -8,9 +8,9 @@ import SearchBar from './SearchBar';
 
 
 
-const FilterSelection = ({dataToFilter, selectedItem, setSelectedItem, onFinish}) => {
+const FilterSelection = ({dataToFilter,intialData, selectedItem, setSelectedItem, onFinish}) => {
 
-    const [filteredData, setfilteredData] = useState(dataToFilter);
+    const [filteredData, setfilteredData] = useState(intialData);
 
     const filterData = (filter) => {
         setfilteredData(dataToFilter.filter((other) => other.includes(filter)))
@@ -28,6 +28,7 @@ const FilterSelection = ({dataToFilter, selectedItem, setSelectedItem, onFinish}
     }
 
     return <>
+    <View style={{height:'95%'}}>
     <View style={styles.backgroundStyle}>
       <Feather name="search" style={styles.iconStyle} />
       <TextInput
@@ -51,7 +52,8 @@ const FilterSelection = ({dataToFilter, selectedItem, setSelectedItem, onFinish}
             );
         }}
     />
-    {selectedItem?<Button title="בחרתי"onPress={onFinish()}/>:null}
+    </View>
+    {selectedItem?<Button title="בחרתי"onPress={onFinish}/>:null}
     </>
 
 };
