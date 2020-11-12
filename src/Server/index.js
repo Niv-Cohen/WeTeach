@@ -7,27 +7,32 @@ const authRoutes = require('./routes/authRoutes')
 const userRoutes =require('./routes/UserRoutes')
 const institutensRoutes = require('./routes/institutensRoutes')
 const requireAuth = require('./middlewares/requireAuth')
-const subjects = require('./routes/subjects');
+const subjectsRoutes = require('./routes/subjectsRoutes');
+const ActionCenter = require('./routes/ActionsCenterRoutes')
+const courseRoutes = require('./routes/CourseRoutes');
+const degreeRoutes = require('./routes/DegreeRoutes');
 require('dotenv').config();
 
 //Start App
 let app = express();
 app.use(bodyParser.json())
 app.use(authRoutes);
-app.use(userRoutes);
-app.use('/institutens',institutensRoutes);
-app.use('/subjects',subjects);
-
-
+app.use('/user',userRoutes);
+app.use('/institute',institutensRoutes);
+app.use('/subject',subjectsRoutes);
+app.use('/ActionCenter',ActionCenter)
+app.use('/course',courseRoutes);
+app.use('/degree',degreeRoutes);
 
 const mongouri = mongoose.connect('mongodb+srv://Nivos_co:Nfn151294Nfn@cluster0.dx0zj.gcp.mongodb.net/DB?retryWrites=true&w=majority',{
     useNewUrlParser:true,
+    useUnifiedTopology: true,
     useCreateIndex:true});
 
  mongoose.connection.on('connected',()=>console.log('connected in to mongo instance'));
  mongoose.connection.on('error',(err)=>console.error('error connecting Help',err));
 //Assign port
-var port =  3001;
+var port =  3000;
 
 
 // Welcome message

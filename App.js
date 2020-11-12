@@ -17,6 +17,7 @@ import { LogBox } from 'react-native';
 
 import {Provider as AuthProvider} from './src/context/AuthContext'
 import {Provider as UserProvider} from './src/context/UserContext'
+import {Provider as ActionCenterProvider} from './src/context/ActionCenterContext';
 LogBox.ignoreAllLogs(true)
 const switchNavigator = createSwitchNavigator({
     TryLocalSignin:TryLocalSignin,
@@ -48,10 +49,12 @@ const switchNavigator = createSwitchNavigator({
  const App = createAppContainer(switchNavigator)
  export default () =>{
    return(
-    <UserProvider>
-     <AuthProvider>
-       <App ref={(navigator)=>setNavigator(navigator)} />
-     </AuthProvider>
-     </UserProvider>
+        <ActionCenterProvider>
+          <UserProvider>
+            <AuthProvider>
+              <App ref={(navigator)=>setNavigator(navigator)} />
+            </AuthProvider>
+          </UserProvider>
+         </ActionCenterProvider>
    )
  }

@@ -1,18 +1,22 @@
 const mongoose = require('mongoose');
 
 const subjectScema = mongoose.Schema({
-    id:{
+    hebName:{
         type:String,
-        unique:true,
-        required:true
     },
-    courseId:{
+    engName:{
         type:String,
-        required:true
     },
     subs:{
         type:[String],
         default:[]
+        // type:[mongoose.Schema.Types.ObjectId],
+        // ref:'User',
+        // default:[]
+    },
+    courseName:{
+        type:String,
+        required:true
     }
 })
 

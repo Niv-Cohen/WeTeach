@@ -1,31 +1,25 @@
 const mongoose = require('mongoose');
 const { schema } = require('./Subject');
 const Subject = require('./Subject');
-const courseShcema = new mongoose.Schema({
+const degreeSchema = mongoose.Schema({
     engName:{
         type:String,
+        unique:true,
         required:true
     },
     hebName:{
-        type:String
+        type:String,
+        unique:true
     },
-    subjects:{
+    courses:{
         type:[mongoose.Schema.Types.ObjectId],
-        ref:'Subject',
+        ref:'course',
         default:[]
     },
-    subs:{
-        type:[String],
-        default:[]
-        // type:[mongoose.Schema.Types.ObjectId],
-        // ref:'User',
-        // default:[]
-    },
-    degree:{
+    institute:{
         type:String,
         required:true
     }
 })
 
-
-module.exports = mongoose.model('course',courseShcema);
+module.exports = mongoose.model('Degree',degreeSchema);

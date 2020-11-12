@@ -1,11 +1,8 @@
 
 const mongoose = require('mongoose');
 const bcrypt = require('bcrypt');
-const Subject = require('./Subject');
-const Course = require('./Course');
 
-
-const userSchema = new mongoose.Schema({
+const userSchema = mongoose.Schema({
     email:{
         type:String,
         unique:true,
@@ -14,15 +11,28 @@ const userSchema = new mongoose.Schema({
     password:{
         type:String,
         required:true
-    }
-    ,
+    },
     name:{type:String,default:''},
-    subjects:{
+    instituten:{
         type:[mongoose.Schema.Types.ObjectId],
-        ref:'Subject',
+        ref:'instituten',
+    },
+    Degree:{
+        type:[mongoose.Schema.Types.ObjectId],
+        ref:'Degree',
         default:[]
     },
-    courses:{
+    coursesITake:{
+        type:[mongoose.Schema.Types.ObjectId],
+        ref:'course',
+        default:[]
+    },
+    coursesITeach:{
+        type:[mongoose.Schema.Types.ObjectId],
+        ref:'course',
+        default:[]
+    },
+    subjectsIHelp:{
         type:[mongoose.Schema.Types.ObjectId],
         ref:'course',
         default:[]
@@ -71,4 +81,4 @@ userSchema.methods.comparePassword = function(candidatePassword){
     })
 }
 
-mongoose.model('User',userSchema);
+module.exports = mongoose.model('User',userSchema);

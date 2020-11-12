@@ -30,7 +30,7 @@ const styles = StyleSheet.create({
     flex: 1,
     padding: 24,
     backgroundColor: '#ccffff'
-} 
+}
 })
 
 export default Account

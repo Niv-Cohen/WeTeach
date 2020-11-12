@@ -15,9 +15,30 @@ const userReducer = (state,action) =>{
             return state;
     }
 };
-
-    const setUser = dispatch => async({user})=>{
+    const setUser = dispatch => async({userId})=>{
         dispatch({type:'set_user',payload:user})
+        const response =await UserApi.post('/ActionCenter/create',userId);
+        dispatch({type:'update_action_center',payload:response.data.ac});
+    }
+
+    const subscribeSubject = dispatch => async ({courses,userId})=>{
+        try{
+            const response =await UserApi.put('/subject/subscribe',{courses,userId});
+            dispatch({type:'edit_user', payload: response.data.user});
+        }catch(err){
+            dispatch({type:'add_err', payload:'Something went wrong'})
+            console.log(err.message)
+        }
+    }
+
+    const subscribeCourse = dispatch => async ({courses,tutorId})=>{
+        try{
+            const response =await UserApi.put('/course/subscribe',{courses,tutorId});
+            dispatch({type:'edit_user', payload: response.data.user});
+        }catch(err){
+            dispatch({type:'add_err', payload:'Something went wrong'})
+            console.log(err.message)
+        }
     }
 
     const editUser = dispatch => async ({_id,params}) => {
@@ -33,4 +54,4 @@ const userReducer = (state,action) =>{
         }
     }
 
-export const {Provider, Context} = createDataContext(userReducer,{setUser,editUser},{user:null,errMessage:''})
+export const {Provider, Context} = createDataContext(userReducer,{setUser,editUser,subscribeCourse,subscribeSubject},{user:null,errMessage:''})

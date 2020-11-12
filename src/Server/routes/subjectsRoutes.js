@@ -1,6 +1,9 @@
 const express = require('express');
-const router = express.Router();
 const Subject = require('../models/Subject');
+const Course =require('../models/Course');
+const mongoose = require('mongoose')
+
+const router = express.Router();
 
 router.get('/',(req,res)=>{
     res.send('it works')
@@ -35,19 +38,35 @@ router.put(`/:id`,(req,res)=>{
     res.send('Updated!')
 })
 
-router.post(`/`, async (req,res)=>{
-    const subject =new Subject({
-        id: req.body.id,
-        courseId:req.body.courseId,
-        subs:[]
-    });
-    console.log('created Subject');
+router.post(`/many`, async (req,res)=>{
+    const {subjects}=req.body;
     try{
-        await subject.save();
-        res.send('new subject was created');
+    subjects.map( async element=>{
+        const {Heb,Eng,courseName}=element;
+        const subject =new Subject({hebName:Heb,engName:Eng,courseName:courseName});
+        await subject.save();})
+        res.send(subjects);
     }
     catch(err){
-        res.send(`Couln't create a new subject`);
+        res.send(err.message);
     }
 });
+
+
+//subscribe to course
+router.put('/subscribe',async (req,res)=>{
+    const {subjects,userId}=req.body;
+     //subscribe to every course in the list
+    try{
+    subjects.map(async element=>{
+       await Subject.updateOne({_id:element},{$addToSet:{subs: userId}})
+    })
+     await User.updateOne({_id:tutorId},{$addToSet:{subjectsIHelp:subjects}});
+     res.send(await User.findById(userId))
+    }catch(err){
+       return res.send(err.message)
+    }
+})
+
+
 module.exports = router;
