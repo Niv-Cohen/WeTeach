@@ -8,12 +8,12 @@ import SearchBar from './SearchBar';
 
 
 
-const FilterSelection = ({dataToFilter,intialData, selectedItem, setSelectedItem, onFinish}) => {
+const FilterSelection = ({multi, placeHolder, dataToFilter, intialData, selectedItem, setSelectedItem, onFinish}) => {
 
     const [filteredData, setfilteredData] = useState(intialData);
 
     const filterData = (filter) => {
-        setfilteredData(dataToFilter.filter((other) => other.includes(filter)))
+        setfilteredData(dataToFilter.filter((other) => {return (other.includes(filter) || isSelected(other) )}))
     }
 
     const textStyle = (item) => {
@@ -21,10 +21,23 @@ const FilterSelection = ({dataToFilter,intialData, selectedItem, setSelectedItem
             marginVertical: 10,
             fontSize: 16,
             borderColor: 'black',
-            fontWeight: item===selectedItem?'bold':'normal',
-            borderWidth: item===selectedItem? 2:1,
+            fontWeight: isSelected(item)?'bold':'normal',
+            borderWidth: isSelected(item)? 2:1,
             padding: 5
         }
+    }
+
+    const isSelected = (item) =>
+    {
+        if (multi){
+            for (const elected of selectedItem){
+                if (elected == item){
+                    return true
+                }
+            }
+            return false
+        }
+        return item == selectedItem
     }
 
     return <>
@@ -33,7 +46,7 @@ const FilterSelection = ({dataToFilter,intialData, selectedItem, setSelectedItem
       <Feather name="search" style={styles.iconStyle} />
       <TextInput
         style={styles.inputStyle}
-        placeholder="איפה את/ה לומד/ת?"
+        placeholder={placeHolder}
         onChangeText={newValue => filterData(newValue)}
       />
     </View>
@@ -43,6 +56,18 @@ const FilterSelection = ({dataToFilter,intialData, selectedItem, setSelectedItem
         renderItem={({ item }) => {
             return (
                 <TouchableOpacity onPress={()=>{
+                    if (multi){
+                        if (isSelected(item))
+                        {
+                            setSelectedItem(selectedItem.filter((other) => other!==item))
+                        
+                        }
+                        else
+                        {
+                            setSelectedItem([...selectedItem, item])
+                        }
+                        return
+                    }
                     setSelectedItem(item);
                 }}>
                 <Text style={textStyle(item)}>
@@ -53,7 +78,13 @@ const FilterSelection = ({dataToFilter,intialData, selectedItem, setSelectedItem
         }}
     />
     </View>
-    {selectedItem?<Button title="בחרתי"onPress={onFinish}/>:null}
+    {
+    multi?
+        selectedItem.length!=0?<Button title="בחרתי"onPress={onFinish}/>:null
+        :
+        selectedItem?<Button title="בחרתי"onPress={onFinish}/>:null
+    }
+    
     </>
 
 };
