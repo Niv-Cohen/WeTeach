@@ -37,8 +37,14 @@ const userSchema = mongoose.Schema({
         ref:'course',
         default:[]
     },
-    img:{type:String,default:''},
-    about:{type:String,default:''}
+    img:{
+        type:String,
+        default:''
+    },
+    about:
+    {type:String,
+    default:''
+    }
 })
 
 userSchema.pre('save',function(next){

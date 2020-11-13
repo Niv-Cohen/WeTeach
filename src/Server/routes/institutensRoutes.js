@@ -2,16 +2,23 @@ const express = require('express');
 const mongoose = require('mongoose')
 const inst = require('../models/Institute')
 const Degree = require('../models/Degree');
+const { populate } = require('../models/Institute');
 
 
 const router = express.Router();
 
 router.get('/', async (req,res)=>{
     try{
+        var database=[];
+        var index=0;
+        var temp;
         const Institutens=  await inst.find()
-        if(Institutens){
-           return res.send({Institutens})
-        }
+        .populate({path:'degrees',model:'Degree',
+        populate:{path:'courses',model:'Course',
+        populate:{path:'subjects',model:'Subject'}
+        }})
+       
+        return res.send(Institutens);     
     }catch(err){
         res.send(err.message)
     }

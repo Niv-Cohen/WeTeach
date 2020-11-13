@@ -13,7 +13,7 @@ const degreeSchema = mongoose.Schema({
     },
     courses:{
         type:[mongoose.Schema.Types.ObjectId],
-        ref:'course',
+        ref:'Course',
         default:[]
     },
     institute:{

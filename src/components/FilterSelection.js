@@ -60,7 +60,6 @@ const FilterSelection = ({multi, placeHolder, dataToFilter, intialData, selected
                         if (isSelected(item))
                         {
                             setSelectedItem(selectedItem.filter((other) => other!==item))
-                        
                         }
                         else
                         {

@@ -15,11 +15,10 @@ const courseShcema = new mongoose.Schema({
         default:[]
     },
     subs:{
-        type:[String],
+        type:[mongoose.Schema.Types.ObjectId],
+        ref:'User',
         default:[]
-        // type:[mongoose.Schema.Types.ObjectId],
-        // ref:'User',
-        // default:[]
+        
     },
     degree:{
         type:String,
@@ -28,4 +27,4 @@ const courseShcema = new mongoose.Schema({
 })
 
 
-module.exports = mongoose.model('course',courseShcema);
+module.exports = mongoose.model('Course',courseShcema);
