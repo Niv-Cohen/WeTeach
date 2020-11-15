@@ -8,20 +8,16 @@ import About from './About'
 import MyCourses from './MyCourses';
 import {Context as AuthContext} from '../context/AuthContext'
 import {Context as UserContext} from '../context/UserContext';
-import {Context as Institutecontext} from '../context/institutensContext'
 
 
 const UserCard = () =>{
     const {state:{user}} = useContext(AuthContext);
     const {setUser,editUser}=useContext(UserContext);
+    console.log(user)
     const {courses,subjects,about,name}=user;
     //array of univerisites, complex stucture, try cosole.log(institutens) first
-    const {state:{institutens}}=useContext(Institutecontext);
-
-
+    //const {state:{institutens}}=useContext(Institutecontext);
     useEffect(()=>{
-        console.log('-------------------------')
-        console.log(user);
         setUser(user);
     },[])
 

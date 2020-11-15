@@ -9,7 +9,6 @@ const LessonsPannel = () =>{
   useEffect(()=>{LogBox.ignoreAllLogs(true)},[])
      return <SafeAreaView forceInset={{top:"always"}}>
     <Text style={{fontWeight:"bold",fontSize:48,justifyContent:"center"}}>LessonsPannel</Text>
-    <UserCard/>
 </SafeAreaView>
 }
 

@@ -19,7 +19,6 @@ import {Provider as AuthProvider} from './src/context/AuthContext'
 import {Provider as UserProvider} from './src/context/UserContext'
 import {Provider as ActionCenterProvider} from './src/context/ActionCenterContext';
 import {Provider as InstProvider} from './src/context/institutensContext';
-
 LogBox.ignoreAllLogs(true)
 const switchNavigator = createSwitchNavigator({
     TryLocalSignin:TryLocalSignin,
@@ -37,7 +36,7 @@ const switchNavigator = createSwitchNavigator({
         }
    }),
    mainFlow:createBottomTabNavigator({
-      setup:setup,
+      Setup:setup,
       Concept:{screen:ConceptTeaching},
       Lessons:{screen:LessonsPannel},
       Account:{screen: Account,title:'משתמש'},
@@ -51,15 +50,14 @@ const switchNavigator = createSwitchNavigator({
  const App = createAppContainer(switchNavigator)
  export default () =>{
    return(
-       
+     <InstProvider>
         <ActionCenterProvider>
           <UserProvider>
-            <InstProvider>
-              <AuthProvider>
-                <App ref={(navigator)=>setNavigator(navigator)} />
-              </AuthProvider>
-            </InstProvider>
+            <AuthProvider>
+              <App ref={(navigator)=>setNavigator(navigator)} />
+            </AuthProvider>
           </UserProvider>
          </ActionCenterProvider>
+     </InstProvider>
    )
  }

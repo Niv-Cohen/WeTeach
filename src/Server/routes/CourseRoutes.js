@@ -21,7 +21,7 @@ router.post('/add',async (req,res)=>{
     }
 })
 //subscribe to course
-router.put('/subscribe',async (req,res)=>{
+router.put('/subscribeToTeach',async (req,res)=>{
     const {courses,tutorId}=req.body;
      //subscribe to every course in the list
     try{
@@ -35,4 +35,21 @@ router.put('/subscribe',async (req,res)=>{
        return res.send(err.message)
     }
 })
+
+router.put('/subscribe',async (req,res)=>{
+    const {courses,studentId}=req.body;
+     //subscribe to every course in the list
+    try{
+    courses.map(async element=>{
+       await Course.updateOne({hebName:element.hebName},{$addToSet:{subs: tutorId}})
+    })
+     await User.updateOne({_id:student},{$addToSet:{coursesITake:courses}});
+     const user=await User.findById(studentId);
+     res.send({user});
+    }catch(err){
+       return res.send(err.message)
+    }
+})
+
+
 module.exports = router;

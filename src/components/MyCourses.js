@@ -45,7 +45,7 @@ const MyCourses = () => {
                   <Overlay isVisible={layoutVisible} animationType='zoomIn' onBackdropPress={()=>setLayoutVisible(false)} overlayStyle={{width:300,height:400}}>
                   <FlatList data={subjects} 
                   renderItem={item=>{return(<Text>{item.item.title} </Text>)}}
-                   keyExtractor={item=>item.title} />
+                  keyExtractor={item=>item.title} />
                   </Overlay>
   </View>
   </View>

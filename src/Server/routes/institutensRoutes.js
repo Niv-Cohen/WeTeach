@@ -9,13 +9,10 @@ const router = express.Router();
 
 router.get('/', async (req,res)=>{
     try{
-        var database=[];
-        var index=0;
-        var temp;
-        const Institutens=  await inst.find()
-        .populate({path:'degrees',model:'Degree',
-        populate:{path:'courses',model:'Course',
-        populate:{path:'subjects',model:'Subject'}
+        const Institutens=  await inst.find().select('hebName degrees')
+        .populate({path:'degrees',model:'Degree',select:'hebName courses' ,
+        populate:{path:'courses',model:'Course',select:'hebName subjects' ,
+        populate:{path:'subjects',model:'Subject',select:'hebName engName' }
         }})
        
         return res.send(Institutens);     

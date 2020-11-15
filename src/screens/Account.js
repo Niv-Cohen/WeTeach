@@ -14,9 +14,7 @@ const Account = ({route,navigation}) => {
 return (    
   <View style={styles.container} >
     <ScrollView showsVerticalScrollIndicator={false} >
-           {/* <Text style={{fontWeight:"bold",fontSize:48,justifyContent:"center",textAlign:'center'}}>Account</Text> */}
             <UserCard/>
-            {/* <ChooseType/> */}
             </ScrollView>
        </View>)
 };

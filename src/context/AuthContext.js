@@ -50,7 +50,7 @@ const signup = (dispatch) =>{
             savedData.token=token;
             savedData.id=id;
             await AsyncStorage.setItem('savedData', JSON.stringify(savedData))
-            console.log('Finished storage')
+            //console.log('Finished storage')
             dispatch({type:'sign_in', payload:token})
             dispatch({type:'set_user',payload:user})
             navigate('Setup');
@@ -65,7 +65,7 @@ const signup = (dispatch) =>{
 const signin = (dispatch)=>{
     return async ({email,password})=>{
         try{
-            const response =await UserApi.post('/signin',{email,password})
+            const response = await UserApi.post('/signin',{email,password})
             const user =response.data.user;
             const token=response.data.token;
             const savedData={};
