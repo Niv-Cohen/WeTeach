@@ -11,6 +11,8 @@ import SignUpScreen from './src/screens/SignUpScreen';
 import TryLocalSignin from './src/screens/TryLocalSignin';
 import LessonsPannel from './src/screens/LessonsPannel';
 import ConceptTeaching from './src/screens/ConceptTeaching';
+import LessonsAndConcepts from './src/screens/LessonsAndConcepts'
+import CreateRequestScreen from './src/screens/CreateRequestScreen'
 import example from './src/components/Examples';
 import setup from './src/screens/Setup';
 import { LogBox } from 'react-native';
@@ -21,6 +23,9 @@ import {Provider as ActionCenterProvider} from './src/context/ActionCenterContex
 import {Provider as InstProvider} from './src/context/institutensContext';
 LogBox.ignoreAllLogs(true)
 const switchNavigator = createSwitchNavigator({
+  // setup:{screen:setup},
+  CreateRequestScreen:{screen:CreateRequestScreen},
+  LessonsAndConcepts:{screen:LessonsAndConcepts},
     TryLocalSignin:TryLocalSignin,
     loginFlow:createStackNavigator({
      Signin:SignInScreen,
