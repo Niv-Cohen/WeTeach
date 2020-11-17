@@ -21,6 +21,7 @@ const CreateRequestScreen = () => {
   const intialCourses = ['Data Structures', 'אלגברה 1', 'אלגברה 2', 'מבוא למדעי המחשב'];
   const subjects = ['AVL', 'Binary Tree', 'Linear-Search', 'Big O', 'Object Oriented', 'Recursion']
   const MAXIMUM_DAYS = 3
+  const MAXIMUM_TIME_SLOTS = 2
 
   const getAvailabilty = () => {
     let arr = []
@@ -38,12 +39,12 @@ const CreateRequestScreen = () => {
     <>
       <Overlay isVisible={currentComponent !== "Done"}>
         <View style={{ width: 300, height: "100%" }}>
-          {currentComponent === "subjectsSelection" ? <Button title="חזור" onPress={() => {
+          {currentComponent === "subjectsSelection" ? <Button title="back" onPress={() => {
             setcurrentComponent("courseSelection")
           }} /> : null}
           {currentComponent === "courseSelection" ? <FilterSelection
             multi={false}
-            placeHolder="איזה קורס נלמד היום?"
+            placeHolder="What course shall we study today?"
             dataToFilter={courses}
             intialData={intialCourses}
             selectedItem={myCourse}
@@ -55,7 +56,7 @@ const CreateRequestScreen = () => {
           }
           {currentComponent === "subjectsSelection" ? <FilterSelection
             multi={true}
-            placeHolder="אילו נושאים נלמד היום??"
+            placeHolder="which subjects shall we study today?"
             intialData={subjects}
             dataToFilter={subjects}
             selectedItem={mySubjects}
@@ -66,22 +67,22 @@ const CreateRequestScreen = () => {
         </View>
       </Overlay>
       <ScrollView>
-        <Button title="revise course and subject selection" onPress={() => {
+        <Button title="Revise course and subject selection" onPress={() => {
           setcurrentComponent("courseSelection")
         }} />
         <Text>course: {myCourse}</Text>
         <Text>subjects: {mySubjects}</Text>
         <TwoRadioButtons
-          header="כמה דקות שיעור?"
-          firstString="45 דקות"
-          secondString="60 דקות"
+          header="Lesson duration"
+          firstString="45 minutes"
+          secondString="60 minutes"
           selected={mylengthRadio}
           setSelected={setMyLengthRadio} />
 
         <TwoRadioButtons
-          header="שיעור רגיל או כפול?"
-          firstString="שיעור רגיל"
-          secondString="שיעור כפול"
+          header="Regular or double lesson?"
+          firstString= "Regular lesson"
+          secondString= "double lesson"
           selected={myDoubleLessonRadio}
           setSelected={setMyDoubleLessonRadio} />
 
@@ -133,7 +134,7 @@ const CreateRequestScreen = () => {
         />
         <FlatList
           data={getAvailabilty()}
-          keyExtractor={(item) => item.date}
+          keyExtractor={(item) => item.dateString}
           renderItem={({ item }) => {
             return <View>
               <Text>{item.dateString}</Text>
@@ -143,6 +144,7 @@ const CreateRequestScreen = () => {
                 keyExtractor={(slot) => slot.start.toString()}
                 renderItem={(slot) => {
                   return <View style={{borderBottomColor:'black', borderWidth:1}}>
+                    <Text>Start</Text>
                     <TimePicker
                       selectedHours={Math.floor(slot.item.start / 60)}
                       selectedMinutes={slot.item.start % 60}
@@ -156,6 +158,7 @@ const CreateRequestScreen = () => {
                         })
                       }} 
                       />
+                    <Text>End</Text>
                     <TimePicker
                       selectedHours={Math.floor(slot.item.end / 60)}
                       selectedMinutes={slot.item.end % 60}
@@ -170,25 +173,47 @@ const CreateRequestScreen = () => {
 
                       }}
                     />
+                    <Button title="remove time slot" onPress={()=>{
+                      let newSlots = item.slots.filter((other) => other.start !== slot.item.start)
+                      if (newSlots.length == 0)
+                      {
+                        let newAvailability = { ...myAvailability }
+                        delete newAvailability[slot.item.dateString]
+                        setMyAvailability(newAvailability)
+                      }
+                      else
+                      {
+                        let newAvailability = {
+                          ...myAvailability,
+                          [slot.item.dateString]: { ...myAvailability[slot.item.dateString], slots: newSlots }
+                        }
+                        setMyAvailability(newAvailability)
+                      }
+                  }}/>
+                    {/* <TouchableOpacity>
+                      <Feather name="x-circle" style={styles.iconStyle} />
+                    </TouchableOpacity> */}
                   </View>
                 }}
               />
-            {item.slots.length<2?<TouchableOpacity onPress={()=>{
-              console.log(item)
-              let newSlots = [...item.slots, { start: item.slots[0].end + 60, end: item.slots[0].end + 120, dateString:item.date } ]
-              setMyAvailability({
-                ...myAvailability,  
-                [item.dateString]: { ...myAvailability[item.dateString], slots: newSlots }
-              })
-            }}>
-              <Feather name="plus" style={styles.iconStyle} />
-            </TouchableOpacity>:null}
+            {item.slots.length < MAXIMUM_TIME_SLOTS?
+            <Button title="add time slot" onPress={()=>{
+                let newSlots = [...item.slots, { start: item.slots[0].end + 60, end: item.slots[0].end + 120, dateString:item.dateString } ]
+                setMyAvailability({
+                  ...myAvailability,  
+                  [item.dateString]: { ...myAvailability[item.dateString], slots: newSlots }
+                })
+              }}/>
+            // <TouchableOpacity>
+            //   <Feather name="plus" style={styles.iconStyle} />
+            // </TouchableOpacity>
+            :null}
             </View>
           }}
         />
-      <Button title="צור בקשה" onPress={()=>{/*show summary overlay and then some server magic happens*/}}/>
+      {Object.keys(myAvailability).length > 0 ? <Button title="create request" onPress={()=>{/*show summary overlay and then some server magic happens*/}}/>:null}
       </ScrollView>
-      {/* courseName:string, subjects:[string], additionalInfo:String, timeSlots:[] */}
+      {/* courseName:string, subjects:[string], additionalInfo:String, timeSlots:[], lessonLength */}
     </>
   )
 

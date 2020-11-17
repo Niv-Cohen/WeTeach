@@ -80,9 +80,9 @@ const FilterSelection = ({multi, placeHolder, dataToFilter, intialData, selected
     </View>
     {
     multi?
-        selectedItem.length!=0?<Button title="בחרתי" onPress={onFinish}/>:null
+        selectedItem.length!=0?<Button title="I have chosen" onPress={onFinish}/>:null
         :
-        selectedItem?<Button title="בחרתי" onPress={onFinish}/>:null
+        selectedItem?<Button title="I have chosen" onPress={onFinish}/>:null
     }
     
     </>

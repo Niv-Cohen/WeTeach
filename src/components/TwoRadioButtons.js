@@ -7,7 +7,7 @@ import { Header, Container, ListItem, Left, Right, Content, Radio } from "native
 
 const TwoRadioButtons = ({ header, firstString, secondString, selected, setSelected }) => {
     return <Container
-    style={{height:80}}>
+    style={{height:130}}>
         <Content>
             <Text>{header}</Text>
             <ListItem>
