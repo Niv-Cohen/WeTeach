@@ -172,8 +172,6 @@ const CreateRequestScreen = () => {
           is24Hour={true}
           display="default"
           onChange={(event, dateObject) => {
-            const slot = myAvailability.slotToEdit
-            const editStart = slot.edit === 'start'
             if (dateObject) {
               const slot = myAvailability.slotToEdit
               const editStart = slot.edit === 'start'
