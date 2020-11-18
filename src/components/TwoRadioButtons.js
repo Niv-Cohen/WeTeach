@@ -18,7 +18,6 @@ const TwoRadioButtons = ({ header, firstString, secondString, selected, setSelec
                     <Radio
                         selected={selected.radio1}
                         onPress={() => {
-                            console.log("press")
                             setSelected({ radio1: true, radio2: false })
                         }} />
                 </Right>
