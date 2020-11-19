@@ -9,6 +9,8 @@ const userReducer = (state,action) =>{
             return{...state,user:action.payload}
         case 'set_user':
             return{...state,user:action.payload}
+        case 'save_instData':
+            return{...state,instituteData:action.payload}
         case 'add_err':
             return { ...state ,errMessage: action.payload}
         case 'clear_err':
@@ -17,6 +19,16 @@ const userReducer = (state,action) =>{
             return state;
     }
 };
+
+const saveInstitutesData = dispatch => ({institutes})=>{
+    try{
+    dispatch({type:'set_data',payload:institutes})
+    }
+    catch(err){
+        dispatch({type:'add_err', payload:'Unable to fetch data'})
+    }
+}
+
     const setUser = dispatch => async(user)=>{
         dispatch({type:'set_user',payload:user})
         const response =await UserApi.post('/ActionCenter/create',userId);
@@ -40,4 +52,4 @@ const userReducer = (state,action) =>{
         }
     }
 
-export const {Provider, Context} = createDataContext(userReducer,{setUser,editUser},{user:null,errMessage:''})
+export const {Provider, Context} = createDataContext(userReducer,{setUser,editUser,saveInstitutesData},{instituteData:null,user:null,errMessage:''})

@@ -8,16 +8,16 @@ import {Context as UserContext} from '../context/UserContext';
 
 
 const Congrats = ({state,increaseSection})=>{
-    const {myInstitute,myDegree,myCourses,userId,tutor}=state;
+    const {myInstitute,myDegree,myCourses,userId}=state;
     const {editUser}=useContext(UserContext);
 return(
                  <>
                  <Spacer/>
-                 <Text h4>Congrats! you are now a part of WeTeach</Text>
+                 <Text >Congrats! you are now a part of WeTeach</Text>
                  <Spacer/>
-                 <Text h4 style={{alignContent:'center'}}>Are there any subject you could assist?</Text>
+                 <Text  style={{alignContent:'center'}}>Are there any subject you could assist?</Text>
                  <Spacer/>
-                 <Text h3 style={{alignSelf:'center'}}>Be A Helper!</Text>
+                 <Text  style={{alignSelf:'center'}}>Be A Helper!</Text>
                  <Spacer/>
                  <Text style={{fontWeight:'bold'}}> Recieve variaty of discounts in Resturants Bars and more!</Text>
                  <Spacer/>
@@ -28,7 +28,9 @@ return(
                   <Text>Count me in!</Text>
                  </Button>
                  <Button bordered rounded 
-                 onPress={()=>editUser(userId,{coursesITake:{myInstitute,myDegree,myCourses}})}>
+                 onPress={
+                   ()=>editUser(userId,{coursesITake:{myInstitute,myDegree,myCourses}})
+                   }>
                   <Text>Maybe later</Text>
                  </Button>
                  </>

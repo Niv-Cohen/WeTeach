@@ -5,9 +5,15 @@ import { Text, Button, Input } from 'react-native-elements';
 import { NavigationEvents } from 'react-navigation';
 import Spacer from './Spacer';
 import { LogBox } from 'react-native';
+import { Size } from 'react-native-popover-view';
+import { FontAwesome,FontAwesome5,Feather,MaterialCommunityIcons,AntDesign } from '@expo/vector-icons';
+
+
+Feather
 const AuthForm = ({buttonText,onPress,errMessage,clearErrMsg}) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [isVisible,SetIsVisible]=useState(false);
   useEffect(()=>{
     LogBox.ignoreAllLogs(true)
   },[])
@@ -16,7 +22,13 @@ const AuthForm = ({buttonText,onPress,errMessage,clearErrMsg}) => {
       <Spacer>
       </Spacer>
       <NavigationEvents onWillFocus={clearErrMsg} />
-      <Input
+      <Input containerStyle={{width:'80%',alignSelf:'center'}}
+        leftIcon={
+          <MaterialCommunityIcons
+            name='owl'
+            size={24}
+            color='black'
+          />}
         label="Email"
         value={email}
         onChangeText={setEmail}
@@ -24,17 +36,28 @@ const AuthForm = ({buttonText,onPress,errMessage,clearErrMsg}) => {
         autoCorrect={false}
       />
       <Spacer />
-      <Input
-        secureTextEntry
+      <Input containerStyle={{width:'80%',alignSelf:'center'}} rightIcon={
+        <AntDesign name='eyeo' onPress={()=>SetIsVisible(!isVisible)} size={24}
+        color='black' />
+      }
+     leftIcon={
+      <Feather
+        name='lock'
+        size={24}
+        color='black'
+      />}
+        secureTextEntry={!isVisible?true:false}
         label="Password"
         value={password}
         onChangeText={setPassword}
         autoCapitalize="none"
         autoCorrect={false}
-      />
+       />
       {errMessage?  <Text style={style.errMessage}>{errMessage}</Text>:null }
       <Spacer>
-        <Button
+        <Button iconRight icon={ <Feather style={{alignSelf:'flex-end'}} name='log-in' size={24}
+        color='black'/> } titleStyle={{color:'black',fontWeight:'bold', fontFamily:'sans-serif-condensed'}} 
+        iconContainerStyle={{marginLeft:20}}  buttonStyle={{backgroundColor:'#FFDB47', width:'80%',alignSelf:'center'}}
           title={buttonText}
           onPress={()=>onPress({email,password})}
         />

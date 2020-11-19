@@ -22,8 +22,7 @@ import {Provider as ActionCenterProvider} from './src/context/ActionCenterContex
 import {Provider as InstProvider} from './src/context/institutensContext';
 LogBox.ignoreAllLogs(true)
 const switchNavigator = createSwitchNavigator({
-  // setup:{screen:setup},
-  
+
   // LessonsAndConcepts:{screen:LessonsAndConcepts},
     TryLocalSignin:TryLocalSignin,
     loginFlow:createStackNavigator({
@@ -40,6 +39,7 @@ const switchNavigator = createSwitchNavigator({
         }
    }),
    mainFlow:createBottomTabNavigator({
+    setup:{screen:setup},
       Concept:{screen:ConceptTeaching},
        CreateRequestScreen:{screen:CreateRequestScreen},
      // Lessons:{screen:LessonsPannel},

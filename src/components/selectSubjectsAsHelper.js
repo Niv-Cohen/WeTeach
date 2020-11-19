@@ -1,5 +1,5 @@
 
-import React,{Component} from 'react'
+import React,{Component, useContext} from 'react'
 import {View,StyleSheet,ScrollView} from 'react-native'
 import { Overlay,Text } from 'react-native-elements';
 import { Button} from 'native-base';
@@ -10,8 +10,9 @@ import UserApi from '../api/Users';
 import {Context as UserContext} from '../context/UserContext';
 import Spacer from '../components/Spacer'
 
-const selectSubjcetsAsHelper = ({state,coursePicker,addSubjectToggle,editUser})=>{
-    const {institutes,myInstitute,myDegree,selectedCourse}=state;
+const selectSubjcetsAsHelper = ({state,coursePicker,addSubjectToggle})=>{
+    const {institutes,userId,subjectsIHelp,myInstitute,myDegree,selectedCourse}=state;
+    const {editUser}=useContext(UserContext)
 return(
                   <>  
                   <Spacer/>
@@ -39,7 +40,7 @@ return(
                   </ScrollView>
                   </View>
                   <View>
-                   <Button onPress={()=>editUser(userId,subjectIHelp)}>
+                   <Button disabled={subjectsIHelp.size===0?true:false} onPress={()=>editUser(userId,subjectsIHelp)}>
                      <Text>Subscribe</Text>
                    </Button>
                  </View>

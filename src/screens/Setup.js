@@ -70,6 +70,7 @@ class Setup extends Component {
             instIndex++;
         })
         const context =this.context;
+        console.log(context.state.user)
         this.setState({institutes:institutes,editUser:context.editUser,
           userId:context.state.user._id,section:0});
     }

@@ -13,21 +13,20 @@ import Spacer from './Spacer';
 
 const UserCard = () =>{
     const {state:{user}} = useContext(AuthContext);
-    const {setUser,editUser}=useContext(UserContext);
-    console.log(user)
+    const {setUser,editUser,state:{instituteData}}=useContext(UserContext);
+    console.log(instituteData)
     const {coursesITeach,coursesITake,subjectIHelp,about,name}=user;
-    //array of univerisites, complex stucture, try cosole.log(institutens) first
-    //const {state:{institutens}}=useContext(Institutecontext);
     useEffect(()=>{
         setUser(user);
     },[])
 
+    
     return <View>
               <StarRanking/>
-              <ProfileImg editUser={editUser} name={name}/>
+              <ProfileImg editUser={editUser}  name={name}/>
               <About about={about} userId={user._id} editUser={editUser}/>
               <Spacer/>
-              <MyCourses coursesITake={coursesITake} coursesITeach={coursesITeach}  subjectsIHelp={subjectIHelp} />
+              {/* <MyCourses instituteData={instituteData} coursesITake={coursesITake}  coursesITeach={coursesITeach}  subjectsIHelp={subjectIHelp} /> */}
            </View>
 }
 

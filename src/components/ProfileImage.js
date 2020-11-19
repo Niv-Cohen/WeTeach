@@ -1,13 +1,9 @@
 import React ,{useState,useEffect}from 'react'
-import { Dimensions,Image,View,StyleSheet,Text,FlatList } from 'react-native'
+import {View,StyleSheet,Text,FlatList } from 'react-native'
 import { ImageManipulator } from 'expo-image-crop';
 import * as ImagePicker from 'expo-image-picker';
-import { TouchableOpacity } from 'react-native-gesture-handler';
 import { Avatar, Overlay,Button,ButtonGroup } from 'react-native-elements';
-import S3 from "aws-sdk/clients/s3";
-import { Credentials, Endpoint } from "aws-sdk";
-import { v4 as uuid } from "uuid";
-import { RNS3 } from 'react-native-aws3';
+
 
 
 const ProfileImage =({name,editPhoto}) =>{
