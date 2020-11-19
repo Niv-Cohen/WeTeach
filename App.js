@@ -9,7 +9,6 @@ import Account from './src/screens/Account';
 import SignInScreen from './src/screens/SignInScreen';
 import SignUpScreen from './src/screens/SignUpScreen';
 import TryLocalSignin from './src/screens/TryLocalSignin';
-import LessonsPannel from './src/screens/LessonsPannel';
 import ConceptTeaching from './src/screens/ConceptTeaching';
 import LessonsAndConcepts from './src/screens/LessonsAndConcepts'
 import CreateRequestScreen from './src/screens/CreateRequestScreen'
@@ -24,8 +23,8 @@ import {Provider as InstProvider} from './src/context/institutensContext';
 LogBox.ignoreAllLogs(true)
 const switchNavigator = createSwitchNavigator({
   // setup:{screen:setup},
-  CreateRequestScreen:{screen:CreateRequestScreen},
-  LessonsAndConcepts:{screen:LessonsAndConcepts},
+  
+  // LessonsAndConcepts:{screen:LessonsAndConcepts},
     TryLocalSignin:TryLocalSignin,
     loginFlow:createStackNavigator({
      Signin:SignInScreen,
@@ -41,9 +40,9 @@ const switchNavigator = createSwitchNavigator({
         }
    }),
    mainFlow:createBottomTabNavigator({
-      Setup:setup,
       Concept:{screen:ConceptTeaching},
-      Lessons:{screen:LessonsPannel},
+       CreateRequestScreen:{screen:CreateRequestScreen},
+     // Lessons:{screen:LessonsPannel},
       Account:{screen: Account,title:'משתמש'},
    },
    {

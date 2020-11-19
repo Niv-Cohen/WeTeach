@@ -1,8 +1,7 @@
 import React,{Component} from 'react'
 import {View,StyleSheet,ScrollView} from 'react-native'
 import { Overlay,Text,ButtonGroup } from 'react-native-elements';
-import { Button} from 'native-base';
-import { Chip } from 'react-native-paper';
+
 import Spinner from '../components/Spinner';
 import Congrats from '../components/Congrats';
 import UserApi from '../api/Users';
@@ -11,11 +10,10 @@ import Spacer from '../components/Spacer'
 import SetupButtonGroup from '../components/SetupButtonGroup';
 import SetHelper from '../components/selectSubjectsAsHelper'
 import SetCourseList from '../components/SetCourseList'
-import MultiSwitch from 'rn-slider-switch';
 
 class Setup extends Component {
 
-  static contextType =UserContext;
+  static contextType = UserContext;
 
     constructor(props) {
         super(props);
@@ -34,7 +32,8 @@ class Setup extends Component {
             myInstitute:null,
             myDegree:null,
             myCourses:[],
-            phase:0 };
+            phase:0 
+          }
       }
 
     async componentDidMount() {

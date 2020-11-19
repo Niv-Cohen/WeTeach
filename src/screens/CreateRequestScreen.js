@@ -1,6 +1,5 @@
 import React, { useContext, useState } from 'react';
 import { View, Text, StyleSheet, Button, TouchableOpacity, FlatList, ScrollView } from 'react-native'
-import FilterSelection from '../components/FilterSelection';
 import { Overlay } from 'react-native-elements';
 import TwoRadioButtons from '../components/TwoRadioButtons'
 import { Calendar } from 'react-native-calendars';
@@ -48,7 +47,7 @@ const CreateRequestScreen = () => {
 
   return (
     <>
-      <Overlay isVisible={currentComponent !== "Done" && currentComponent !== "calendar"}>
+      {/* <Overlay isVisible={currentComponent !== "Done" && currentComponent !== "calendar"}>
         <View style={{ width: 300, height: "100%" }}>
           {currentComponent === "subjectsSelection" ? <Button title="back" onPress={() => {
             setcurrentComponent("courseSelection")
@@ -76,7 +75,7 @@ const CreateRequestScreen = () => {
               () => { setcurrentComponent("Done") }
             } /> : null}
         </View>
-      </Overlay>
+      </Overlay> */}
       <ScrollView>
         <Button title="Revise course and subject selection" onPress={() => {
           setcurrentComponent("courseSelection")
@@ -277,8 +276,9 @@ const CreateRequestScreen = () => {
     </>
   )
 
-
 }
+
+
 
 const styles = StyleSheet.create({
   backgroundStyle: {

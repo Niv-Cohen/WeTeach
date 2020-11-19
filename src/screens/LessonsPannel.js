@@ -12,9 +12,7 @@ const LessonsPannel = () =>{
 </SafeAreaView>
 }
 
-LessonsPannel.navigationOptions = {
-    tabBarIcon: <FontAwesome name="plus-circle" size={35} />
-  };
+
 
 
 export default LessonsPannel

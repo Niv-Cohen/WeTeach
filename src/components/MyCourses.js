@@ -34,7 +34,7 @@ const MyCourses = ({coursesITeach,coursesITake,subjectIHelp}) => {
                   {coursesITake.length!==0?<Text style={{margin:10}}>edit</Text>:<Text style={{margin:10}}>Which Course Do You Take?</Text>}
                   </Button>
                   </View>
-                  <Overlay isVisible={isEditCoursesVisible} onPress={()=>setIsEditCoursesVisible(!isEditCoursesVisible)}>
+                  <Overlay isVisible={isEditCoursesVisible} onBackdropPress={()=>setIsEditCoursesVisible(!isEditCoursesVisible)}>
                     {/* <CoursesSet /> */}
                   </Overlay>
           </View>

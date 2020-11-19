@@ -8,8 +8,7 @@ import { LogBox } from 'react-native';
 const ConceptTeaching = () => {
   useEffect(()=>{LogBox.ignoreAllLogs(true)},[])
 return <SafeAreaView forceInset={{top:"always"}}>
-           <Text style={{fontWeight:"bold",fontSize:48,justifyContent:"center"}}>ConceptTeaching</Text>
-           <MyCourses/>
+          <Text style={{fontWeight:"bold",fontSize:48,justifyContent:"center"}}>ConceptTeaching</Text>
        </SafeAreaView>
 };
 
