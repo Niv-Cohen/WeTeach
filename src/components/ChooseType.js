@@ -7,7 +7,6 @@ import { FontAwesome,FontAwesome5 } from '@expo/vector-icons';
 const ChooseType = () =>{
     const [userType, setUserType] = useState(0);
     const Types =[{name:'Student',icon:'graduation-cap',src:FontAwesome},{name:'Tutor',icon:'chalkboard-teacher',src:FontAwesome5},{name:'Both',icon:'user-graduate', src:FontAwesome5}];
-//{type.index===userType?'blue':'black'}
 
     return <>
             <FlatList style={style.list} horizontal={true} keyExtractor={type=>type.name} data={Types} 

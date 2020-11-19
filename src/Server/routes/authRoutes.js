@@ -38,16 +38,16 @@ router.post('/signin', async (req, res) => {
     }
   });
 
-  router.post('/users/:_id',async (req,res)=>{
-    const {_id} =req.body;
-    if(!_id){
-           res.status(433).send({error:`id was not recieved`})
-           }
-      const user = await User.findOne({_id});
-      if (!user) {
-        return res.status(422).send(`${id} wasn't found ` );
-      }
-      res.send({user});
-  })
+  // router.post('/users/:_id',async (req,res)=>{
+  //   const {_id} =req.body;
+  //   if(!_id){
+  //          res.status(433).send({error:`id was not recieved`})
+  //          }
+  //     const user = await User.findOne({_id});
+  //     if (!user) {
+  //       return res.status(422).send(`${id} wasn't found ` );
+  //     }
+  //     res.send({user});
+  // })
 
 module.exports = router;

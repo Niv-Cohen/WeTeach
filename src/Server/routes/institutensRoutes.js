@@ -13,8 +13,7 @@ router.get('/', async (req,res)=>{
         .populate({path:'degrees',model:'Degree',select:'hebName courses' ,
         populate:{path:'courses',model:'Course',select:'hebName subjects' ,
         populate:{path:'subjects',model:'Subject',select:'hebName engName' }
-        }})
-       
+        }}) 
         return res.send(Institutens);     
     }catch(err){
         res.send(err.message)

@@ -27,7 +27,7 @@ const tryLocalSignin = dispatch => async () => {
         const token =savedData.token;
         const id =savedData.id;
         const _id=id;
-        const response = await UserApi.post(`/users/${_id}`,{_id})
+        const response = await UserApi.post(`/user/${_id}`,{_id})
         const user = response.data.user;
         dispatch({ type: 'signin', payload: token})
         dispatch({type:'set_user',payload:user})

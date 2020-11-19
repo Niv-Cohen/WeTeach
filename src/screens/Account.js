@@ -6,17 +6,21 @@ import ChooseType from '../components/ChooseType';
 import UserCard from '../components/UserCard';
 import { LogBox } from 'react-native';
 
+import { Container, Content, Footer, FooterTab, Button, Icon, Badge } from 'native-base';
+
 const Account = ({route,navigation}) => {
   useEffect(()=>{
     LogBox.ignoreAllLogs(true)
   },[])
   
 return (    
+
   <View style={styles.container} >
     <ScrollView showsVerticalScrollIndicator={false} >
             <UserCard/>
             </ScrollView>
-       </View>)
+       </View>
+       )
 };
 
 Account.navigationOptions = {

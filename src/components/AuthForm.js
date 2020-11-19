@@ -17,7 +17,7 @@ const AuthForm = ({buttonText,onPress,errMessage,clearErrMsg}) => {
       </Spacer>
       <NavigationEvents onWillFocus={clearErrMsg} />
       <Input
-        label="אימייל"
+        label="Email"
         value={email}
         onChangeText={setEmail}
         autoCapitalize="none"
@@ -26,7 +26,7 @@ const AuthForm = ({buttonText,onPress,errMessage,clearErrMsg}) => {
       <Spacer />
       <Input
         secureTextEntry
-        label="סיסמא"
+        label="Password"
         value={password}
         onChangeText={setPassword}
         autoCapitalize="none"

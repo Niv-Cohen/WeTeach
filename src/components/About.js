@@ -20,7 +20,7 @@ const About = ({userId,about,editUser}) =>{
 
   }
     return(
-<Card containerStyle={{flex:1,borderColor:'red',borderWidth:3,shadowColor: "#000",
+<Card containerStyle={{flex:1,shadowColor: "#000",
 shadowOffset: {
 	width: 0,
 	height: 6,
@@ -29,7 +29,7 @@ shadowOpacity: 0.39,
 shadowRadius: 8.30,
 
 elevation: 13,}}>
-  <Card.Title style={{textAlign:'left'}}>About</Card.Title>
+  <Card.Title >About</Card.Title>
       {edit?<TextInput autoFocus={true}  onChangeText={(text) => setUserAbout(text)} value={userAbout}></TextInput>:<Text >{userAbout}</Text>}
       <Icon style={styles.icon} name='edit' size={20} type='font-awesome' reverse onPress={()=>toggleEditvisibilaty()}/>
 </Card>)

@@ -11,10 +11,10 @@ const SignUpScreen = () =>{
     return (<>
             <Spacer/>
             <Spacer/>
-        <AuthForm onPress={signup} buttonText='הרשם' errMessage={state.errMessage} clearErrMsg={clearErrMsg}/>
+        <AuthForm onPress={signup} buttonText='Register' errMessage={state.errMessage} clearErrMsg={clearErrMsg}/>
         <NavLink 
         routeName="Signin"
-        text="משתמש רשום? התחבר במקום"
+        text="Are you a WeTeach member? SignIn"
       />
     </>
     )

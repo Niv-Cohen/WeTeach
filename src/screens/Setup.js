@@ -1,16 +1,17 @@
 import React,{Component} from 'react'
-import {View,StyleSheet} from 'react-native'
-import { Overlay,Text,Divider,SearchBar } from 'react-native-elements';
+import {View,StyleSheet,ScrollView} from 'react-native'
+import { Overlay,Text,ButtonGroup } from 'react-native-elements';
 import { Button} from 'native-base';
 import { Chip } from 'react-native-paper';
-import List from '../components/List';
-import LowerButtons from '../components/SetupLowerButtons';
+import Spinner from '../components/Spinner';
+import Congrats from '../components/Congrats';
 import UserApi from '../api/Users';
 import {Context as UserContext} from '../context/UserContext';
 import Spacer from '../components/Spacer'
-import {navigate} from '../NavigationRef'
-
-var Spinner = require('react-native-spinkit');
+import SetupButtonGroup from '../components/SetupButtonGroup';
+import SetHelper from '../components/selectSubjectsAsHelper'
+import SetCourseList from '../components/SetCourseList'
+import MultiSwitch from 'rn-slider-switch';
 
 class Setup extends Component {
 
@@ -19,13 +20,14 @@ class Setup extends Component {
     constructor(props) {
         super(props);
         this.state = {
+            selectedButtonIndex:1,
             selectedCourse:null,
-            selectCourseSubjects:null,
-            SubjectsIHelp:[],
+            subjectsIHelp:new Map(),
+            tutor:false,
             tempList:[],
             search:'',
-            section:0,
-            subscribeFunc:null,
+            section:-1,
+            editUser:null,
             userId:null,
             data:null,
             institutes:null,
@@ -68,27 +70,18 @@ class Setup extends Component {
             institutes.push({hebName:inst.hebName,instIndex,degrees})
             instIndex++;
         })
-        console.log('I finished split')
         const context =this.context;
-        console.log(context.state)
-        this.setState({institutes:institutes,subscribeFunc:context.subscribeSubjects,userId:context.state.user._id});
+        this.setState({institutes:institutes,editUser:context.editUser,
+          userId:context.state.user._id,section:0});
     }
 
-
-
-     firstPhasePress =(index,hebName)=>{
-        setMyInstitute({index:index,hebName:hebName});
-    }
-
-    secondPhasePress =(index,hebName)=>{
-        setMyDegree({index:index,hebName:hebName});
-    }
     toggleCourse = (index,hebName)=>{
         if(this.state.myCourses.some((course)=>course.index===index))
             this.setState({myCourses:this.state.myCourses.filter((course=>course.index!==index))})
         else
             this.setState({myCourses:[...this.state.myCourses,{hebName,index}]})
     }
+
     myInstituteHandler = (index,hebName)=>{
         this.setState({myInstitute:{index,hebName}})
     }
@@ -113,133 +106,87 @@ class Setup extends Component {
           break;
       }
       this.setState({phase:this.state.phase-1})};
-    
-    switchListCases=()=>{
-        const {phase,institutes,myInstitute,myDegree,myCourses,search}=this.state;
-        if(institutes){
-        switch (phase) {
-            case 0:
-              return ( <List array={institutes} search={search} usableState={myInstitute} onPressFun={this.myInstituteHandler} />)
-            case 1:
-              return (<List array={institutes[myInstitute.index].degrees} search={search} usableState={myDegree} onPressFun={this.myDegreeHandler}/>)
-            case 2:
-              return (<List array={institutes[myInstitute.index].degrees[myDegree.index].courses} search={search} usableState={myCourses} onPressFun={this.toggleCourse} myCoursesStyleCond={true}/>)
-           default :
-             return null
-        }
-    }
-    }
 
-    switchButtonCases =()=>{
-      const {phase,institutes,myInstitute,myDegree,myCourses,section}=this.state;
-      if(institutes){
-        switch (phase) {
-          case 0:
-            return <LowerButtons usableState={myInstitute} onPressFun={this.phaseIncreaser} buttonText={'הבא'} iconName={'arrow-back'}/>
-          case 1:
-            return (<>
-              <LowerButtons usableState={myDegree} onPressFun={this.phaseReducer} buttonText={'חזור'} iconName={'arrow-forward'}/>
-              <LowerButtons usableState={myDegree} onPressFun={this.phaseIncreaser} buttonText={'הבא'} iconName={'arrow-back'}/>
-              </>
-            )
-          case 2:
-              return(
-                  <>
-                    <LowerButtons  onPressFun={this.phaseReducer} buttonText={'חזור'} iconName={'arrow-forward'}/>
-                    <Button bordered rounded disabled={myCourses.length===0?true:false} onPress={()=>
-                      {
-                        this.state.subscribeFunc(myCourses,this.state.userId)
-                        this.setState({section:section+1})
-                        }}>
-                    <Text >סיים הרשמה</Text>
-                    </Button>
-                  </>
-              )
-          default:
-            break;
+   addSubjectToggle = (selectedSubject)=> {
+      const {subjectsIHelp,selectedCourse} = this.state;
+      var updatedMap=subjectsIHelp;
+      var updatedSubjectsList;
+      const {courseName}=selectedCourse
+      if(!subjectsIHelp.has(courseName)){
+        console.log('added new course in addition to subject')
+        updatedMap.set(courseName,[selectedSubject]);
+      }
+      //the course is on the list
+      else{
+      //the subject was found
+      console.log('the course is on the list')
+      if(subjectsIHelp.get(courseName).some(sub=>sub.engName===selectedSubject.engName)){
+        //this is the only subject on the course lists
+        if(subjectsIHelp.get(courseName).length===1){
+            console.log('length is one')
+            updatedMap.delete(courseName);
+        } //there are more subjects in the course list
+        else{
+         updatedMap=subjectsIHelp;
+         updatedSubjectsList=subjectsIHelp.get(courseName);
+          updatedSubjectsList=updatedSubjectsList.filter(sub=>sub.engName!==selectedSubject.engName);
+            updatedMap.set(courseName,updatedSubjectsList);
         }
       }
+      //add subject to course list
+      else{
+          console.log('push subject into exsisting list');
+          updatedSubjectsList=subjectsIHelp.get(courseName);
+           updatedSubjectsList=updatedSubjectsList.concat([selectedSubject]);
+           updatedMap =subjectsIHelp;
+           updatedMap.set(courseName,updatedSubjectsList);
     }
+  }
+  this.setState({subjectsIHelp:updatedMap})
+  console.log(subjectsIHelp);
+}
 
-    placeHolder=()=>{
-      const {phase}=this.state;
-      switch (phase) {
-        case 0:
-          return `אני לומד ב....`
-        case 1:
-          return `אני לומד....`
-        case 2:
-          return 'קורסים הסימסטר'
-        default:
-          return ''
-      }
-    }
+ updateSearch = (search) => {
+  this.setState({search});
+};
 
-    updateSearch = (search) => {
-      this.setState({search});
-    };
+  increaseSection= ()=>{
+    this.setState({section:this.state.section +1})
+  }
 
+  coursePicker = (courseName,index)=>{(this.setState({selectedCourse:{courseName,index}}))}
+
+  updateIndex =(selectedButtonIndex)=> {
+    this.setState({selectedButtonIndex,tutor:!this.state.tutor,phase:selectedButtonIndex===1?0:3})
+  }
 
    render() {
-    const {section,search,phase,institutes,myInstitute,myDegree}=this.state
-
-        return(
-            
+      const {section,selectedButtonIndex}=this.state
+    return(
             <View>
                  <Overlay visible={true} overlayStyle={{width:300,height:550}}>
-                 {section===0?
-                   <>
-                   <SearchBar placeholder={this.placeHolder()} round  
-                   onChangeText={this.updateSearch}
-                   value={search}/>
-                 <Divider style={{ backgroundColor: 'black',height: 2 }} />
-                 {this.switchListCases()}
-                 {this.switchButtonCases()}
+                <SetupButtonGroup selected={selectedButtonIndex} setSelected={this.updateIndex}/>
+                {selectedButtonIndex===1?section===-1?
+                 <Spinner/>
+                 :section===0?
+                 <SetCourseList myInstituteHandler={this.myInstituteHandler} myDegreeHandler={this.myDegreeHandler}
+                  toggleCourse={this.toggleCourse} phaseIncreaser={this.phaseIncreaser} phaseReducer={this.phaseReducer} 
+                  increaseSection={this.increaseSection} updateSearch={this.updateSearch}
+                 state={this.state}/>
+                 :section===1?
+                 <Congrats state={this.state} increaseSection={this.increaseSection}/>:
+                 <SetHelper state={this.state} coursePicker={this.coursePicker}  addSubjectToggle={this.addSubjectToggle} />
+                 :selectedButtonIndex===0&&
+                 <>
+                 <SetCourseList myInstituteHandler={this.myInstituteHandler} myDegreeHandler={this.myDegreeHandler}
+                  toggleCourse={this.toggleCourse} phaseIncreaser={this.phaseIncreaser} phaseReducer={this.phaseReducer} 
+                  increaseSection={this.increaseSection} updateSearch={this.updateSearch}
+                 state={this.state}/>
                  </>
-                 :section===1?<>
-                 <Spacer/>
-                 <Text h4>סיימת את תהליך ההרשמה!</Text>
-                 <Spacer/>
-                 <Text h3 style={{alignSelf:'center'}}>Be A Helper!</Text>
-                 <Spacer/>
-                 <Text h4 style={{alignContent:'center'}}>האם קיימים נושאים בהם תוכל לעזור?</Text>
-                 <Spacer/>
-                 <Text style={{fontWeight:'bold'}}> קבלת הטבות למסעדות ברים ועוד אטרקציות </Text>
-                 <Spacer/>
-                 <Text style={{fontWeight:'bold'}}>קבלת תעדוף בעזרה מסטודנטים אחרים!</Text>
-                 <Button bordered rounded onPress={()=>this.setState({section:section+1})}>
-                  <Text>צרף אותי</Text>
-                 </Button>
-                 <Button bordered rounded onPress={()=>navigate('Account')}>
-                  <Text>אולי אחר כך</Text>
-                 </Button>
-                 </>:
-                  <>
-                  <View>
-                  {}
-
-                  </View>
-                  <hr/>
-                  <View style={{flex:1,  flexDirection: 'row', alignItems:'center',alignSelf:'stretch', justifyContent: 'flex-start',bottom:0}}>
-                  {institutes[myInstitute.index].degrees[myDegree.index].courses.map((course,i)=>{
-                    return(
-                      <Chip
-                      style={{marginVertical:10,marginHorizontal:0.5}}>
-                        {course.hebName}
-                        </Chip>
-                    )
-                  })}
-                  </View>
-                  </>
-                 
-                 
-                 }
+                 } 
                </Overlay>
                </View>)
-    
 }}
-
-
 
 styles = StyleSheet.create({
     container: {

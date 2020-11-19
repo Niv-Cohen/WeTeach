@@ -1,63 +1,69 @@
 const express = require('express');
 const mongoose = require('mongoose')
-const jwt = require('jsonwebtoken');
-const { param } = require('./authRoutes');
-const Subject = require('../models/Subject');
-const User = require('../models/User');
+const User = mongoose.model('User')
 const Course =require('../models/Course');
 
 const router = express.Router();
 
-router.put('/:id', async (req,res) => {
+router.post('/:_id',async (req,res)=>{
+    const {_id} =req.body;
+    if(!_id){
+           res.status(433).send({error:`id was not recieved`})
+           }
+      const user = await User.findOne({_id});
+      if (!user) {
+        return res.status(422).send(`${id} wasn't found ` );
+      }
+      res.send({user});
+  })
+
+  router.put('/', async (req,res) => {
         var {_id,params} =req.body;
+        const {about,img,coursesITeach,coursesITake,subjectsIHelp}=params
+        var course;
+        var coursesList=[];
         try{
-       const user= await User.findOne({_id})
+       let user= await User.findOne({_id})
        if(user){
-           if(params.about)
-               user.about=params.about;
-           else if(params.img)
-               user.img=params.img;
-            else if(params.courses)        
-               user.courses=params.courses;
-            else if(params.subjects)
-               user.subjects=params.subjects;
-               user.save;
-               res.send({user})   
-       }
+           if(about)
+               user.about=about;
+           if(img)
+               user.img=img;
+           if(coursesITeach){
+                    let {myCourses} = coursesITeach
+                    myCourses.map( async course=>{
+                    coursesList=coursesList.concat([course.hebName])
+                    course = await Course.findOne({hebName:course.hebName})
+                    course.subs=[...course.subs,_id]
+                    course.save()
+                    })
+                    //check why the user doesn't update
+                    user.coursesITeach =myCourses;
+                    user.save();
+                    return res.send(user)
+                }
+           else if(coursesITake){
+                let {myCourses} = coursesITeach
+                myCourses.map(course=>coursesList.concat([course.hebName]))
+                user.coursesITake=coursesList; 
+                ////check why the user doesn't update
+                  await user.save()
+                  }
+           else if(subjectsIHelp){
+                subjectsIHelp.forEach(async (value,key,map)=>{
+                    subjectsList=[];
+                    value.map(subject=>subjectsList.concat([subject.engName])) 
+                    course = await Course.findOne({hebName:key}).populate({path:'subjects',model:'Subject'});
+                    course.subject.map(subject=>subjectsList.includes(subject.engName)?subject.subs=[...subject.subs,_id]:null)
+                    course.save();
+                })
+            }
+         user.save();
+         return res.send(user) 
+        }
        else
           return res.status(100).send({err:'user was not found'})
-    }catch(err){
-        return res.status(152).send({err})
-        }
-    })
 
-
-    router.put('/setup/', async(req,res)=>{
-       const {setUp,_id}=req.body;
-       try{
-       const user= await User.findOne({_id});
-       if(setUp.student){
-          const {coursesITake,subjectsIHelp} =setUp.student;
-          if(coursesITake)
-             user.coursesITake=[...user.coursesITake,...coursesITake];
-          if(subjectsIHelp){
-            subjectsIHelp.map(async ref=> {
-                user.subjectsIHelp=[...user.subjectsIHelp,subjectsIHelp];
-                var subject = await Subject.findone({_id:ref})
-                subject.subs=[...subject.subs,user]})
-          }
-          if(setUp.tutor){
-              const {coursesITeach} =setUp.tutor;
-              if(coursesITeach){
-                user.coursesITeach=[...user.coursesITeach,coursesITeach];
-                coursesITeach.map(async ref=>{
-                    var course = await Course.findOne({_id:ref})
-                    course.subs
-                })
-              }
-          }
-       }
-       res.send(user);
     }catch(err){
         return res.status(152).send(err.message)
         }

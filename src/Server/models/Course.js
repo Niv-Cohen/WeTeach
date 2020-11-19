@@ -1,6 +1,7 @@
 const mongoose = require('mongoose');
 const { schema } = require('./Subject');
 const Subject = require('./Subject');
+
 const courseShcema = new mongoose.Schema({
     engName:{
         type:String,

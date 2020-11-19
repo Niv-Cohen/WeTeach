@@ -23,18 +23,15 @@ const userSchema = mongoose.Schema({
         default:[]
     },
     coursesITake:{
-        type:[mongoose.Schema.Types.ObjectId],
-        ref:'course',
+        type:[String],
         default:[]
     },
     coursesITeach:{
-        type:[mongoose.Schema.Types.ObjectId],
-        ref:'course',
+        type:[String],
         default:[]
     },
     subjectsIHelp:{
-        type:[mongoose.Schema.Types.ObjectId],
-        ref:'course',
+        type:[String],
         default:[]
     },
     img:{

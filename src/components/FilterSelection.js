@@ -13,8 +13,7 @@ const FilterSelection = ({multi, placeHolder, dataToFilter, intialData, selected
     const [filteredData, setfilteredData] = useState(intialData);
 
     const filterData = (filter) => {
-        setfilteredData(dataToFilter.filter((other) => {
-            return (other.toLowerCase().includes(filter.toLowerCase()) || isSelected(other) )}))
+        setfilteredData(dataToFilter.filter((other) => {return (other.includes(filter) || isSelected(other) )}))
     }
 
     const textStyle = (item) => {
@@ -42,7 +41,7 @@ const FilterSelection = ({multi, placeHolder, dataToFilter, intialData, selected
     }
 
     return <>
-    <View style={{height:'90%'}}>
+    <View style={{height:'95%'}}>
     <View style={styles.backgroundStyle}>
       <Feather name="search" style={styles.iconStyle} />
       <TextInput
@@ -80,9 +79,9 @@ const FilterSelection = ({multi, placeHolder, dataToFilter, intialData, selected
     </View>
     {
     multi?
-        selectedItem.length!=0?<Button title="I have chosen" onPress={onFinish}/>:null
+        selectedItem.length!=0?<Button title="בחרתי"onPress={onFinish}/>:null
         :
-        selectedItem?<Button title="I have chosen" onPress={onFinish}/>:null
+        selectedItem?<Button title="בחרתי"onPress={onFinish}/>:null
     }
     
     </>

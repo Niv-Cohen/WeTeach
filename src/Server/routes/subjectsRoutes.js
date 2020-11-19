@@ -42,8 +42,8 @@ router.post(`/many`, async (req,res)=>{
     const {subjects}=req.body;
     try{
     subjects.map( async element=>{
-        const {Heb,Eng,courseName}=element;
-        const subject =new Subject({hebName:Heb,engName:Eng,courseName:courseName});
+        const {hebName,engName,courseName}=element;
+        const subject =new Subject({hebName,engName,courseName});
         await subject.save();})
         res.send(subjects);
     }

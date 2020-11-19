@@ -1,5 +1,7 @@
 import createDataContext from './createDataContext';
 import UserApi from '../api/Users'
+import {navigate} from '../NavigationRef'
+
 
 const userReducer = (state,action) =>{
     switch(action.type){
@@ -21,37 +23,21 @@ const userReducer = (state,action) =>{
         dispatch({type:'update_action_center',payload:response.data.ac});
     }
 
-    const subscribeSubjects = dispatch => async ({courses,userId})=>{
+    const editUser = dispatch => async (_id,params) => {
         try{
-            const response =await UserApi.put('/subject/subscribe',{courses,userId});
-            dispatch({type:'edit_user', payload: response.data.user});
-        }catch(err){
-            dispatch({type:'add_err', payload:'Something went wrong'})
-            console.log(err.message)
-        }
-    }
-
-    const subscribeCourses = dispatch => async ({courses,studentId})=>{
-        try{
-            const response =await UserApi.put('/course/subscribe',{courses,studentId});
-            dispatch({type:'edit_user', payload: response.data.user});
-        }catch(err){
-            dispatch({type:'add_err', payload:'Something went wrong'})
-            console.log(err.message)
-        }
-    }
-
-    const editUser = dispatch => async ({_id,params}) => {
-        try{
+            console.log('Im in edituser func')
             console.log(params)
             console.log(_id)
-            const response = await UserApi.put(`/users/${_id}`,{_id,params});
+            const response = await UserApi.put(`/user/`,{_id,params});
             console.log(response.data)
             dispatch({type:'edit_user', payload: response.data.user})
+            console.log('now navigating to mainFlow')
+            navigate('Account')
         }catch(err){
             dispatch({type:'add_err', payload:'Something went wrong'})
+            console.log('something went wrong!')
             console.log(err.message)
         }
     }
 
-export const {Provider, Context} = createDataContext(userReducer,{setUser,editUser,subscribeCourses,subscribeSubjects},{user:null,errMessage:''})
+export const {Provider, Context} = createDataContext(userReducer,{setUser,editUser},{user:null,errMessage:''})

@@ -13,7 +13,7 @@ const LessonsPannel = () =>{
 }
 
 LessonsPannel.navigationOptions = {
-    tabBarIcon: <FontAwesome name="book" size={22} />
+    tabBarIcon: <FontAwesome name="plus-circle" size={35} />
   };
 
 
