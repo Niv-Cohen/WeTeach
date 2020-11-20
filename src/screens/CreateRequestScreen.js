@@ -5,6 +5,7 @@ import { Overlay, Button } from 'react-native-elements';
 import TwoRadioButtons from '../components/TwoRadioButtons'
 import { Calendar } from 'react-native-calendars';
 import { Feather } from '@expo/vector-icons'
+import { Chip } from 'react-native-paper';
 // import TimePicker from 'react-native-simple-time-picker';
 
 
@@ -80,19 +81,18 @@ const CreateRequestScreen = () => {
       </Overlay>
       <ScrollView>
         <View>
-        <Text>Selected course: </Text>
-        <Text style={{alignSelf:'center', borderColor:'black', borderWidth:1, padding:5}}>{myCourse}</Text>
-        <Text>Selected subjects:</Text>
-        <FlatList
-          data={mySubjects}
-          keyExtractor={(item) => item}
-          renderItem={({ item }) => {
-            return (
-              <View style={{alignSelf:'center', borderBottomColor:'black', borderWidth:1, padding:5, margin:2}}>
-                <Text>{item}</Text>
-              </View>)
-          }}
-        />
+          <Text>Selected course: </Text>
+          <Chip style={{ alignSelf: 'center', padding: 2 }}>{myCourse}</Chip  >
+          <Text>Selected subjects:</Text>
+          <FlatList
+            horizontal={true}
+            data={mySubjects}
+            keyExtractor={(item) => item}
+            renderItem={({ item }) => {
+              return (
+                <Chip style={{ margin: 2 }}>{item}</Chip>)
+            }}
+          />
         </View>
         <Button title="Revise course and subject selection" style={styles.reviseButtonStyle} onPress={() => {
           setcurrentComponent("courseSelection")
@@ -119,7 +119,7 @@ const CreateRequestScreen = () => {
           value={myNotes}
           onChangeText={(newNote) => { setMyNotes(newNote) }}
         />
-        <Text>select availability windows:</Text>
+        <Text>Select availability windows:</Text>
         <Button title="Show Calendar" onPress={() => { setcurrentComponent("calendar") }} />
         <Overlay visible={currentComponent == "calendar"}>
           <View>
@@ -299,10 +299,6 @@ const CreateRequestScreen = () => {
 }
 
 const styles = StyleSheet.create({
-  // reviseButtonStyle:{
-  //   marginTop: 100,
-  //   paddingTop:100
-  // },
   backgroundStyle: {
     marginTop: 10,
     backgroundColor: '#F0EEEE',
