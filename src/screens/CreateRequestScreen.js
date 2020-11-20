@@ -1,7 +1,7 @@
 import React, { useContext, useState } from 'react';
-import { View, Text, StyleSheet, Button, TouchableOpacity, FlatList, ScrollView } from 'react-native'
+import { View, Text, StyleSheet, TouchableOpacity, FlatList, ScrollView } from 'react-native'
 import FilterSelection from '../components/FilterSelection';
-import { Overlay } from 'react-native-elements';
+import { Overlay, Button } from 'react-native-elements';
 import TwoRadioButtons from '../components/TwoRadioButtons'
 import { Calendar } from 'react-native-calendars';
 import { Feather } from '@expo/vector-icons'
@@ -10,6 +10,7 @@ import { Feather } from '@expo/vector-icons'
 
 import DateTimePicker from '@react-native-community/datetimepicker';
 import { TextInput } from 'react-native-paper';
+import { SafeAreaView } from 'react-native-safe-area-context';
 var moment = require('moment')
 
 
@@ -47,7 +48,7 @@ const CreateRequestScreen = () => {
   const [selectedDate, setSelectedDate] = useState(null);
 
   return (
-    <>
+    <SafeAreaView>
       <Overlay isVisible={currentComponent !== "Done" && currentComponent !== "calendar"}>
         <View style={{ width: 300, height: "100%" }}>
           {currentComponent === "subjectsSelection" ? <Button title="back" onPress={() => {
@@ -78,9 +79,21 @@ const CreateRequestScreen = () => {
         </View>
       </Overlay>
       <ScrollView>
-        <View style={{ height: 30 }} />
-        <Text>Selected course: {myCourse}</Text>
-        <Text>Selected subjects: {mySubjects}</Text>
+        <View>
+        <Text>Selected course: </Text>
+        <Text style={{alignSelf:'center', borderColor:'black', borderWidth:1, padding:5}}>{myCourse}</Text>
+        <Text>Selected subjects:</Text>
+        <FlatList
+          data={mySubjects}
+          keyExtractor={(item) => item}
+          renderItem={({ item }) => {
+            return (
+              <View style={{alignSelf:'center', borderBottomColor:'black', borderWidth:1, padding:5, margin:2}}>
+                <Text>{item}</Text>
+              </View>)
+          }}
+        />
+        </View>
         <Button title="Revise course and subject selection" style={styles.reviseButtonStyle} onPress={() => {
           setcurrentComponent("courseSelection")
         }} />
@@ -106,7 +119,8 @@ const CreateRequestScreen = () => {
           value={myNotes}
           onChangeText={(newNote) => { setMyNotes(newNote) }}
         />
-        <Button title="Show calendar" onPress={() => { setcurrentComponent("calendar") }} />
+        <Text>select availability windows:</Text>
+        <Button title="Show Calendar" onPress={() => { setcurrentComponent("calendar") }} />
         <Overlay visible={currentComponent == "calendar"}>
           <View>
             <Calendar
@@ -211,7 +225,6 @@ const CreateRequestScreen = () => {
                   return <View style={{ borderColor: 'black', borderWidth: 1, margin: 2, padding: 2 }}>
                     <View style={{ flexDirection: 'row', justifyContent: 'space-evenly' }}>
                       <View>
-                        <Text>Start: {slot.item.start.toLocaleTimeString()}</Text>
                         <TouchableOpacity onPress={() => {
                           setMyAvailability({
                             ...myAvailability, slotToEdit: {
@@ -222,11 +235,11 @@ const CreateRequestScreen = () => {
                             }
                           })
                         }}>
+                          <Text>Start: {slot.item.start.toLocaleTimeString()}</Text>
                           <Feather name='edit' style={styles.iconStyle} />
                         </TouchableOpacity>
                       </View>
                       <View>
-                        <Text>end: {slot.item.end.toLocaleTimeString()}</Text>
                         <TouchableOpacity onPress={() => {
                           setMyAvailability({
                             ...myAvailability, slotToEdit: {
@@ -237,6 +250,7 @@ const CreateRequestScreen = () => {
                             }
                           })
                         }}>
+                          <Text>end: {slot.item.end.toLocaleTimeString()}</Text>
                           <Feather name='edit' style={styles.iconStyle} />
                         </TouchableOpacity></View></View>
                     <TouchableOpacity onPress={() => {
@@ -275,10 +289,10 @@ const CreateRequestScreen = () => {
             </View>
           }}
         />
-        {Object.keys(myAvailability).length > 0 ? <Button title="create request" onPress={() => {/*show summary overlay and then some server magic happens*/ }} /> : null}
+        {Object.keys(myAvailability).length > 1 ? <Button title="create request" onPress={() => {/*show summary overlay and then some server magic happens*/ }} /> : null}
       </ScrollView>
       {/* courseName:string, subjects:[string], additionalInfo:String, timeSlots:[], lessonLength */}
-    </>
+    </SafeAreaView>
   )
 
 
