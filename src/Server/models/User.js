@@ -13,9 +13,9 @@ const userSchema = mongoose.Schema({
         required:true
     },
     name:{type:String,default:''},
-    instituten:{
+    institute:{
         type:[mongoose.Schema.Types.ObjectId],
-        ref:'instituten',
+        ref:'institute',
     },
     Degree:{
         type:[mongoose.Schema.Types.ObjectId],
@@ -23,15 +23,18 @@ const userSchema = mongoose.Schema({
         default:[]
     },
     coursesITake:{
-        type:[String],
+        type:[mongoose.Schema.Types.ObjectId],
+        ref:'Course',
         default:[]
     },
     coursesITeach:{
-        type:[String],
+        type:[mongoose.Schema.Types.ObjectId],
+        ref:'Course',
         default:[]
     },
     subjectsIHelp:{
-        type:[String],
+        type:[mongoose.Schema.Types.ObjectId],
+        ref:'Subject',
         default:[]
     },
     img:{

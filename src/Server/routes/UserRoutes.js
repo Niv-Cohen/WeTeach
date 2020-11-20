@@ -1,7 +1,9 @@
 const express = require('express');
-const mongoose = require('mongoose')
-const User = mongoose.model('User')
+const mongoose = require('mongoose');
+const User = require('../models/User');
 const Course =require('../models/Course');
+const Subject = require('../models/Subject');
+const Institute =require('../models/Institute');
 
 const router = express.Router();
 
@@ -18,55 +20,57 @@ router.post('/:_id',async (req,res)=>{
   })
 
   router.put('/', async (req,res) => {
-        var {_id,params} =req.body;
-        const {about,img,coursesITeach,coursesITake,subjectsIHelp}=params
-        var course;
-        var coursesList=[];
-        try{
-       let user= await User.findOne({_id})
-       if(user){
-           if(about)
-               user.about=about;
-           if(img)
-               user.img=img;
-           if(coursesITeach){
-                    let {myCourses} = coursesITeach
-                    myCourses.map( async course=>{
-                    coursesList=coursesList.concat([course.hebName])
-                    course = await Course.findOne({hebName:course.hebName})
-                    course.subs=[...course.subs,_id]
-                    course.save()
-                    })
-                    //check why the user doesn't update
-                    user.coursesITeach =myCourses;
-                    user.save();
-                    return res.send(user)
+     const {_id,params} =req.body;
+     const {about,img,coursesITeach,coursesITake,subjectsIHelp}=params
+     let coursesList =[]
+     try{
+            let user= await User.findOne({_id})
+            if(user){
+                if(about)
+                    user.about=about;
+                if(img)
+                    user.img=img;
+                if(coursesITeach){
+                        let {myCourses} = coursesITeach
+                        for(const course of myCourses){
+                            courseFound = await Course.findOne({hebName:course.hebName})
+                            if(courseFound){
+                                courseFound.subs=[...courseFound.subs,_id]
+                                coursesList=[...coursesList,courseFound];
+                                courseFound.save();
+                                }}               
+                        user.coursesITeach=coursesList;
                 }
            else if(coursesITake){
-                let {myCourses} = coursesITeach
-                myCourses.map(course=>coursesList.concat([course.hebName]))
-                user.coursesITake=coursesList; 
-                ////check why the user doesn't update
-                  await user.save()
-                  }
-           else if(subjectsIHelp){
-                subjectsIHelp.forEach(async (value,key,map)=>{
-                    subjectsList=[];
-                    value.map(subject=>subjectsList.concat([subject.engName])) 
-                    course = await Course.findOne({hebName:key}).populate({path:'subjects',model:'Subject'});
-                    course.subject.map(subject=>subjectsList.includes(subject.engName)?subject.subs=[...subject.subs,_id]:null)
-                    course.save();
-                })
-            }
-         user.save();
-         return res.send(user) 
-        }
-       else
-          return res.status(100).send({err:'user was not found'})
+                let {myCourses,myInstitute} = coursesITake
+                coursesList=[];
+                const inst =Institute.find({hebName:myInstitute.hebName});
+                user.institute=[...user.institute,inst];
+                for(const course of myCourses){
+                    courseFound = await Course.findOne({hebName:course.hebName})
+                    if(courseFound){
+                        coursesList=[...coursesList,courseFound];
+                        }}               
+                user.coursesITake=coursesList;
 
-    }catch(err){
-        return res.status(152).send(err.message)
-        }
-    })
+            if(subjectsIHelp){
+                for(const subjectsArr of subjectsIHelp.values())
+                {
+                    for(const subject of subjectsArr)
+                    {
+                        const subjects= await Subject.find({engName:subject.engName})
+                        for(const subject of subjects)
+                        {
+                            subject.subs=[...subject.subs,_id];
+                            subject.save();
+                        }
+                    }
+                    user.subjectsIHelp=[...user.subjectsIHelp,subjectsArr];
+                }
+                }
+            }}
+            user.save();
+            return res.send(user) 
+        }catch(err){return res.send(err.message)}})
 
 module.exports = router;

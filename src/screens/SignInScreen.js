@@ -19,8 +19,7 @@ const SignInScreen = () =>{
             <Spacer/>
             <Image style={{alignSelf:'center',width:280,marginBottom:5,marginRight:20,
     height: 85,}} source={require('../../assets/WeTeach_Transparent.png')} />
-            {/* <Text style={style.wellcome}>Wellcome back, you've been missed!</Text> */}
-            {/* <Text style={style.LetsSign}>Let's Sign You In</Text> */}
+            <Text style={style.LetsSign}>Let's Sign You In</Text>
             <Spacer />
             <Spacer />
             <AuthForm buttonText='SIGN IN' errMessage={state.errMessage} onPress={signin} clearErrMsg={clearErrMsg}/>

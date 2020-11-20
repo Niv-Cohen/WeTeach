@@ -20,6 +20,16 @@ const userReducer = (state,action) =>{
     }
 };
 
+    const convertToArr=(map)=>{
+        var mapToSend = {}
+    for (var key of map.keys()) {
+        mapToSend[key] = map.get(key);
+    }
+    return mapToSend;
+    }
+
+
+
 const saveInstitutesData = dispatch => ({institutes})=>{
     try{
     dispatch({type:'set_data',payload:institutes})
@@ -38,8 +48,13 @@ const saveInstitutesData = dispatch => ({institutes})=>{
     const editUser = dispatch => async (_id,params) => {
         try{
             console.log('Im in edituser func')
-            console.log(params)
-            console.log(_id)
+            const {subjectsIHelp}=params;
+            // console.log(params)
+            // console.log(_id)
+            if(subjectsIHelp){
+              params.subjectsIHelp= convertToArr(subjectsIHelp);
+                console.log(params);
+            }
             const response = await UserApi.put(`/user/`,{_id,params});
             console.log(response.data)
             dispatch({type:'edit_user', payload: response.data.user})

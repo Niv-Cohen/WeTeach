@@ -183,10 +183,11 @@ class Setup extends Component {
                   increaseSection={this.increaseSection} updateSearch={this.updateSearch}
                  state={this.state}/>
                  </>
-                 } 
+                 }
                </Overlay>
                </View>)
 }}
+
 
 styles = StyleSheet.create({
     container: {

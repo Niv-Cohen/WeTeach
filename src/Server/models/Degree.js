@@ -4,12 +4,11 @@ const Subject = require('./Subject');
 const degreeSchema = mongoose.Schema({
     engName:{
         type:String,
-        unique:true,
         required:true
     },
     hebName:{
         type:String,
-        unique:true
+        
     },
     courses:{
         type:[mongoose.Schema.Types.ObjectId],

@@ -62,7 +62,7 @@ import {Context as UserContext} from '../context/UserContext';
                 return(
                     <>
                       <LowerButtons  onPressFun={phaseReducer} buttonText={'Back'} iconName={'arrow-forward'}/>
-                      <Button bordered rounded disabled={myCourses.length===0?true:false} onPress={tutor?()=>editUser(userId,{courseITeach:{myInstitute,myDegree,myCourses}}):()=>increaseSection()}>
+                      <Button bordered rounded disabled={myCourses.length===0?true:false} onPress={tutor?()=>editUser(userId,{coursesITeach:{myInstitute,myDegree,myCourses}}):()=>increaseSection()}>
                       <Text >Finish</Text>
                       </Button>
                     </>

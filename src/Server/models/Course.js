@@ -19,7 +19,6 @@ const courseShcema = new mongoose.Schema({
         type:[mongoose.Schema.Types.ObjectId],
         ref:'User',
         default:[]
-        
     },
     degree:{
         type:String,

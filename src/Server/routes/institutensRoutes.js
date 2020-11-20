@@ -24,7 +24,7 @@ router.get('/', async (req,res)=>{
     router.post('/add',async (req,res)=>{
         const {hebName,engName}=req.body;
         try{
-            const degrees = await Degree.find({institute:hebName}).select('_id');
+            const degrees = await Degree.find({institute:engName}).select('_id');
             const institute=new inst({hebName,engName,degrees});
             await institute.save();
             res.send(institute);
