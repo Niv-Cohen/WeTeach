@@ -21,8 +21,7 @@ const SignUpScreen = () =>{
             <Spacer/>
             <Image style={{alignSelf:'center',width:280,marginBottom:5,marginRight:20,
     height: 85,}} source={require('../../assets/WeTeach_Transparent.png')} />
-            <Spacer/>
-            <Spacer/>
+            <Text style={style.LetsSign}>Let's Add You To WeTeach!</Text>     
         <AuthForm onPress={signup} buttonText='Register' errMessage={state.errMessage} clearErrMsg={clearErrMsg}/>
         <NavLink 
         routeName="Signin"
@@ -36,6 +35,14 @@ const SignUpScreen = () =>{
 
 }
 
-const style = StyleSheet.create({});
+const style = StyleSheet.create({
+  LetsSign:{
+    alignSelf:'center',
+    "fontFamily": "DM Sans",
+    "fontStyle": "normal",
+    "fontWeight": "bold",
+    "fontSize": 24,
+  }
+});
 
 export default SignUpScreen;

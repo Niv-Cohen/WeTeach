@@ -15,15 +15,14 @@ const UserCard = () =>{
     const {state:{user}} = useContext(AuthContext);
     const {setUser,editUser,state:{instituteData}}=useContext(UserContext);
     console.log(instituteData)
-    const {coursesITeach,coursesITake,subjectIHelp,about,name}=user;
+    const {coursesITeach,coursesITake,subjectIHelp,about,name,img}=user;
     useEffect(()=>{
         setUser(user);
     },[])
 
     
     return <View>
-              <StarRanking/>
-              <ProfileImg editUser={editUser}  name={name}/>
+              <ProfileImg editUser={editUser} img={img}  name={name}/>
               <About about={about} userId={user._id} editUser={editUser}/>
               <Spacer/>
               {/* <MyCourses instituteData={instituteData} coursesITake={coursesITake}  coursesITeach={coursesITeach}  subjectsIHelp={subjectIHelp} /> */}

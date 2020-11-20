@@ -20,8 +20,6 @@ const SignInScreen = () =>{
             <Image style={{alignSelf:'center',width:280,marginBottom:5,marginRight:20,
     height: 85,}} source={require('../../assets/WeTeach_Transparent.png')} />
             <Text style={style.LetsSign}>Let's Sign You In</Text>
-            <Spacer />
-            <Spacer />
             <AuthForm buttonText='SIGN IN' errMessage={state.errMessage} onPress={signin} clearErrMsg={clearErrMsg}/>
             <NavLink 
         routeName="Signup"
@@ -38,7 +36,6 @@ const SignInScreen = () =>{
 
 const style =StyleSheet.create({
     container:{
-
 
     },
     signin:{
