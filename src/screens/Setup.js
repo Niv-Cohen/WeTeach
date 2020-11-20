@@ -178,10 +178,12 @@ class Setup extends Component {
                  <SetHelper state={this.state} coursePicker={this.coursePicker}  addSubjectToggle={this.addSubjectToggle} />
                  :selectedButtonIndex===0&&
                  <>
+               
                  <SetCourseList myInstituteHandler={this.myInstituteHandler} myDegreeHandler={this.myDegreeHandler}
                   toggleCourse={this.toggleCourse} phaseIncreaser={this.phaseIncreaser} phaseReducer={this.phaseReducer} 
                   increaseSection={this.increaseSection} updateSearch={this.updateSearch}
                  state={this.state}/>
+                 
                  </>
                  }
                </Overlay>

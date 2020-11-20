@@ -1,4 +1,5 @@
 import React,{useContext} from 'react'
+import {} from 'react-native'
 import {Text } from 'react-native-elements';
 import { Button} from 'native-base';
 import List from './List';
@@ -6,6 +7,7 @@ import LowerButtons from './SetupLowerButtons';
 import { SearchBar } from 'react-native-elements';
 import Spacer from './Spacer';
 import {Context as UserContext} from '../context/UserContext';
+import { ScrollView } from 'react-native-gesture-handler';
 
  const SetCourseList = ({state,updateSearch,myInstituteHandler,
     myDegreeHandler,toggleCourse,phaseIncreaser,phaseReducer,increaseSection}) => {
@@ -16,11 +18,11 @@ import {Context as UserContext} from '../context/UserContext';
         if(institutes){
         switch (phase%3) {
             case 0:
-              return ( <List array={institutes} search={search} usableState={myInstitute} onPressFun={myInstituteHandler} />)
+              return ( <ScrollView><List array={institutes} search={search} usableState={myInstitute} onPressFun={myInstituteHandler} /></ScrollView>)
             case 1:
-              return (<List array={institutes[myInstitute.index].degrees} search={search} usableState={myDegree} onPressFun={myDegreeHandler}/>)
+              return (<ScrollView><List array={institutes[myInstitute.index].degrees} search={search} usableState={myDegree} onPressFun={myDegreeHandler}/></ScrollView>)
             case 2:
-              return (<List array={institutes[myInstitute.index].degrees[myDegree.index].courses} search={search} usableState={myCourses} onPressFun={toggleCourse} myCoursesStyleCond={true}/>)
+              return (<ScrollView><List array={institutes[myInstitute.index].degrees[myDegree.index].courses} search={search} usableState={myCourses} onPressFun={toggleCourse} myCoursesStyleCond={true}/></ScrollView>)
            default :
              return null
         }
@@ -80,7 +82,7 @@ return(
      <Text style={{fontWeight:"bold"}}>Dont worry we will add all the corresponding courses</Text>
      </>}
     <Spacer/>
-    
+
     <SearchBar placeholder={placeHolder()} round  
                    onChangeText={updateSearch}
                    value={search}/> 

@@ -1,5 +1,4 @@
 const mongoose = require('mongoose');
-const { schema } = require('./Subject');
 const instSchema =new mongoose.Schema({
     hebName:{
         type:String,

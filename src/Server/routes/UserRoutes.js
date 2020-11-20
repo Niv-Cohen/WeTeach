@@ -23,54 +23,66 @@ router.post('/:_id',async (req,res)=>{
      const {_id,params} =req.body;
      const {about,img,coursesITeach,coursesITake,subjectsIHelp}=params
      let coursesList =[]
-     try{
+     
             let user= await User.findOne({_id})
-            if(user){
+            if(user)
+            {
                 if(about)
                     user.about=about;
                 if(img)
                     user.img=img;
                 if(coursesITeach){
                         let {myCourses} = coursesITeach
+                        try{
                         for(const course of myCourses){
                             courseFound = await Course.findOne({hebName:course.hebName})
-                            if(courseFound){
+                            if(courseFound)
+                            {
                                 courseFound.subs=[...courseFound.subs,_id]
                                 coursesList=[...coursesList,courseFound];
                                 courseFound.save();
-                                }}               
+                            }
+                          }  
                         user.coursesITeach=coursesList;
+                      }catch(err){return res.send(err.message)} 
                 }
-           else if(coursesITake){
+            else if(coursesITake){
                 let {myCourses,myInstitute} = coursesITake
                 coursesList=[];
-                const inst =Institute.find({hebName:myInstitute.hebName});
-                user.institute=[...user.institute,inst];
+                // const inst =Institute.find({hebName:myInstitute.hebName});
+                // user.institute=inst;
+                try{
                 for(const course of myCourses){
                     courseFound = await Course.findOne({hebName:course.hebName})
                     if(courseFound){
                         coursesList=[...coursesList,courseFound];
                         }}               
                 user.coursesITake=coursesList;
-
-            if(subjectsIHelp){
-                for(const subjectsArr of subjectsIHelp.values())
-                {
-                    for(const subject of subjectsArr)
-                    {
-                        const subjects= await Subject.find({engName:subject.engName})
-                        for(const subject of subjects)
-                        {
-                            subject.subs=[...subject.subs,_id];
-                            subject.save();
-                        }
-                    }
-                    user.subjectsIHelp=[...user.subjectsIHelp,subjectsArr];
-                }
-                }
-            }}
-            user.save();
-            return res.send(user) 
-        }catch(err){return res.send(err.message)}})
+                      }
+                      catch(err){return res.send(err.message)}
+            if(subjectsIHelp)
+            {
+              try{
+                for(const subject of subjectsIHelp)
+             {
+               //subIdList=[];
+                  const subjects = await Subject.find({engName:subject.engName});
+                  for(const match of subjects){
+                    match.subs=[...match.subs,_id];
+                    match.save();
+                    //subIdList=[...subIdList,mathc._id]
+                    user.subjectsIHelp=[...user.subjectsIHelp,match]
+                  }
+                  //user.subjectsIHelp=[...user.subjectsIHelp,subIdList];
+             }
+             }catch(err){return res.send(err.message)}
+          }
+        }
+        await user.save();
+        return res.send(user) 
+      }
+    })
+            
+      
 
 module.exports = router;

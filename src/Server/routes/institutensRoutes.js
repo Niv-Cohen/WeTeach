@@ -2,7 +2,7 @@ const express = require('express');
 const mongoose = require('mongoose')
 const inst = require('../models/Institute')
 const Degree = require('../models/Degree');
-const { populate } = require('../models/Institute');
+
 
 
 const router = express.Router();

@@ -1,6 +1,7 @@
 import createDataContext from './createDataContext';
 import UserApi from '../api/Users'
 import {navigate} from '../NavigationRef'
+import { moveAsync } from 'expo-file-system';
 
 
 const userReducer = (state,action) =>{
@@ -20,12 +21,17 @@ const userReducer = (state,action) =>{
     }
 };
 
-    const convertToArr=(map)=>{
-        var mapToSend = {}
-    for (var key of map.keys()) {
-        mapToSend[key] = map.get(key);
-    }
-    return mapToSend;
+    const convertToArr=(map)=>
+    {
+        var arrayToSend = []
+        map.forEach((value,key,map) => 
+        {
+            for(const subject of value)
+            {
+                arrayToSend=[...arrayToSend,{engName:subject.engName}];
+            }
+        });
+        return arrayToSend;
     }
 
 
@@ -51,10 +57,12 @@ const saveInstitutesData = dispatch => ({institutes})=>{
             const {subjectsIHelp}=params;
             // console.log(params)
             // console.log(_id)
+            
             if(subjectsIHelp){
-              params.subjectsIHelp= convertToArr(subjectsIHelp);
-                console.log(params);
+                params.subjectsIHelp=convertToArr(subjectsIHelp)
+                console.log(params.subjectsIHelp);
             }
+        
             const response = await UserApi.put(`/user/`,{_id,params});
             console.log(response.data)
             dispatch({type:'edit_user', payload: response.data.user})
