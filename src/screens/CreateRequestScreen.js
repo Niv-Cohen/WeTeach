@@ -78,18 +78,19 @@ const CreateRequestScreen = () => {
         </View>
       </Overlay>
       <ScrollView>
-        <Button title="Revise course and subject selection" onPress={() => {
+        <View style={{ height: 30 }} />
+        <Text>Selected course: {myCourse}</Text>
+        <Text>Selected subjects: {mySubjects}</Text>
+        <Button title="Revise course and subject selection" style={styles.reviseButtonStyle} onPress={() => {
           setcurrentComponent("courseSelection")
         }} />
-        <Text>course: {myCourse}</Text>
-        <Text>subjects: {mySubjects}</Text>
         <TwoRadioButtons
           header="Lesson duration"
           firstString="45 minutes"
           secondString="60 minutes"
           selected={mylengthRadio}
           setSelected={setMyLengthRadio} />
-          {/* disappears for some reason */}
+        {/* disappears for some reason */}
 
         <TwoRadioButtons
           header="Regular or double lesson?"
@@ -200,40 +201,45 @@ const CreateRequestScreen = () => {
           keyExtractor={(item) => item.dateString}
           renderItem={({ item }) => {
             return <View>
-              <Text>{item.dateString}</Text>
+              <Text style={{ alignSelf: 'center' }}>{item.dateString}</Text>
 
               <FlatList
                 data={item.slots}
                 listKey={item.dateString}
                 keyExtractor={(slot) => slot.start.toString()}
                 renderItem={(slot) => {
-                  return <View style={{ borderBottomColor: 'black', borderWidth: 1 }}>
+                  return <View style={{ borderColor: 'black', borderWidth: 1, margin: 2, padding: 2 }}>
+                    <View style={{ flexDirection: 'row', justifyContent: 'space-evenly' }}>
+                      <View>
+                        <Text>Start: {slot.item.start.toLocaleTimeString()}</Text>
+                        <TouchableOpacity onPress={() => {
+                          setMyAvailability({
+                            ...myAvailability, slotToEdit: {
+                              dateString: slot.item.dateString,
+                              start: slot.item.start,
+                              end: slot.item.end,
+                              edit: 'start'
+                            }
+                          })
+                        }}>
+                          <Feather name='edit' style={styles.iconStyle} />
+                        </TouchableOpacity>
+                      </View>
+                      <View>
+                        <Text>end: {slot.item.end.toLocaleTimeString()}</Text>
+                        <TouchableOpacity onPress={() => {
+                          setMyAvailability({
+                            ...myAvailability, slotToEdit: {
+                              dateString: slot.item.dateString,
+                              start: slot.item.start,
+                              end: slot.item.end,
+                              edit: 'end'
+                            }
+                          })
+                        }}>
+                          <Feather name='edit' style={styles.iconStyle} />
+                        </TouchableOpacity></View></View>
                     <TouchableOpacity onPress={() => {
-                      setMyAvailability({
-                        ...myAvailability, slotToEdit: {
-                          dateString: slot.item.dateString,
-                          start: slot.item.start,
-                          end: slot.item.end,
-                          edit: 'start'
-                        }
-                      })
-                    }}>
-                      <Text>Start: {slot.item.start.toLocaleTimeString()}</Text>
-                    </TouchableOpacity>
-
-                    <TouchableOpacity onPress={() => {
-                      setMyAvailability({
-                        ...myAvailability, slotToEdit: {
-                          dateString: slot.item.dateString,
-                          start: slot.item.start,
-                          end: slot.item.end,
-                          edit: 'end'
-                        }
-                      })
-                    }}>
-                      <Text>end: {slot.item.end.toLocaleTimeString()}</Text>
-                    </TouchableOpacity>
-                    <Button title="remove time slot" onPress={() => {
                       let newSlots = item.slots.filter((other) => other.start !== slot.item.start)
                       if (newSlots.length === 0) {
                         let newAvailability = { ...myAvailability }
@@ -247,26 +253,24 @@ const CreateRequestScreen = () => {
                         }
                         setMyAvailability(newAvailability)
                       }
-                    }} />
-                    {/* <TouchableOpacity>
+                    }}>
                       <Feather name="x-circle" style={styles.iconStyle} />
-                    </TouchableOpacity> */}
+                    </TouchableOpacity>
                   </View>
                 }}
               />
               {item.slots.length < MAXIMUM_TIME_SLOTS ?
-                <Button title="add time slot" onPress={() => {
-                  newStart = new Date(item.slots[0].end.getTime() + (60 * MILLISECONDS_IN_MINUTE))
-                  newEnd = new Date(item.slots[0].end.getTime() + (120 * MILLISECONDS_IN_MINUTE))
+                <TouchableOpacity onPress={() => {
+                  const newStart = new Date(item.slots[0].end.getTime() + (60 * MILLISECONDS_IN_MINUTE))
+                  const newEnd = new Date(item.slots[0].end.getTime() + (120 * MILLISECONDS_IN_MINUTE))
                   let newSlots = [...item.slots, { start: newStart, end: newEnd, dateString: item.dateString }]
                   setMyAvailability({
                     ...myAvailability,
                     [item.dateString]: { ...myAvailability[item.dateString], slots: newSlots }
                   })
-                }} />
-                // <TouchableOpacity>
-                //   <Feather name="plus" style={styles.iconStyle} />
-                // </TouchableOpacity>
+                }}>
+                  <Feather name="plus" style={styles.iconStyle} />
+                </TouchableOpacity>
                 : null}
             </View>
           }}
@@ -281,6 +285,10 @@ const CreateRequestScreen = () => {
 }
 
 const styles = StyleSheet.create({
+  // reviseButtonStyle:{
+  //   marginTop: 100,
+  //   paddingTop:100
+  // },
   backgroundStyle: {
     marginTop: 10,
     backgroundColor: '#F0EEEE',
