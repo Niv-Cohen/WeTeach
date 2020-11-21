@@ -8,11 +8,9 @@ const subjectScema = mongoose.Schema({
         type:String,
     },
     subs:{
-        type:[String],
+        type:[mongoose.Schema.Types.ObjectId],
+        ref:'User',
         default:[]
-        // type:[mongoose.Schema.Types.ObjectId],
-        // ref:'User',
-        // default:[]
     },
     courseName:{
         type:String,

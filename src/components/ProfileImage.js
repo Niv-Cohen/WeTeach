@@ -57,7 +57,6 @@ const ProfileImage =({name,editPhoto}) =>{
         //   RNS3.put(file,config).then((response)=>console.log(response))
         
       
-        console.log(result);
     
         if (!result.cancelled) {
           setImage(result.uri);

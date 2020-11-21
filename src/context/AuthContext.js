@@ -31,7 +31,7 @@ const tryLocalSignin = dispatch => async () => {
         const user = response.data.user;
         dispatch({ type: 'signin', payload: token})
         dispatch({type:'set_user',payload:user})
-        navigate('mainFlow');
+        navigate('SignInMiddleware');
         }
         catch(err){
             console.log(err.message)
@@ -53,7 +53,7 @@ const signup = (dispatch) =>{
             //console.log('Finished storage')
             dispatch({type:'sign_in', payload:token})
             dispatch({type:'set_user',payload:user})
-            navigate('Setup');
+            navigate('SignUpMiddleware');
         }catch(err){
             dispatch({type:'add_err', payload:err.message})
             console.log(err.message)
@@ -74,7 +74,7 @@ const signin = (dispatch)=>{
             await AsyncStorage.setItem('savedData', JSON.stringify(savedData))
             dispatch({type:'sign_in', payload:token})
             dispatch({type:'set_user',payload:user})
-            navigate('mainFlow')
+            navigate('SignInMiddleware')
         }catch(err){
             dispatch({type:'add_err', payload:err.message})
         }

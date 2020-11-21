@@ -1,9 +1,10 @@
 import createDataContext from './createDataContext';
 import UserApi from '../api/Users'
+import { navigate } from '../NavigationRef';
 
 const actionCenterReducer = (state,action) =>{
     switch(action.type){
-        case 'update_action_center':
+        case 'edit_Action_Center':
             return{...state,actionCenter:action.payload}
         case 'add_err':
             return { ...state ,errMessage: action.payload}
@@ -13,6 +14,30 @@ const actionCenterReducer = (state,action) =>{
             return state;
     }
 };
+
+const createActionCenter = dispatch =>async (userId)=>{
+    try{
+        const response =await UserApi.post('/ActionCenter/create',{userId});
+        dispatch({type:'edit_Action_Center',payload:response.data.ac})
+        navigate('Setup');
+    }catch(err){
+        dispatch({type:'add_err',payload:err})
+    }
+}
+
+const setActionCenter = dispatch =>async (userId)=>{
+    try{
+        console.log('Im in setActionCenter')
+        console.log(userId)
+        const response = await UserApi.get('/ActionCenter/',{userId})
+        console.log(response.data);
+        dispatch({type:'edit_Action_Center',payload:response.data.ac})
+        navigate('Account')
+    }catch(err){
+        dispatch({type:'add_err',payload:err})
+    }
+}
+
 
 const addOffer = dispatch => async({studentId,tutorId,price,Date,reqId})=>{
     try{
@@ -25,11 +50,15 @@ const addOffer = dispatch => async({studentId,tutorId,price,Date,reqId})=>{
     }
 }
 
-const addReq = dispatch=> async ({userId,courseName,subjects,additionalInfo,timeSlots})=>{
+const addReq = dispatch=> async ({userId,course,subjects,additionalInfo,timeSlots,lessonLength})=>{
     try{
-        const params = {courseName,subjects,additionalInfo,timeSlots}
-        const response = await UserApi.put(`/ActionCenter/addReq`,{userId,courseName,subjects,additionalInfo,timeSlots});
+        console.log('in Add Req')
+        const params = {userId,course,subjects,additionalInfo,timeSlots,lessonLength}
+        const response = await UserApi.put(`/ActionCenter/addReq`,{params});
+        console.log(response.data.ac)
+        console.log('about to navigate')
         dispatch({type:'update_action_center',payload:response.data.ac});
+        navigate('Account');
     }catch(err){
     dispatch({type:'add_err', payload:'Something went wrong'})
     console.log(err.message)
@@ -47,4 +76,4 @@ const setLesson = dispatch => async ({chosenOffer})=>{
     }
 }
 
-export const {Provider, Context} = createDataContext(actionCenterReducer,{setLesson,addReq,addOffer},{actionCenter:null,errMessage:''})
+export const {Provider, Context} = createDataContext(actionCenterReducer,{createActionCenter,setLesson,addReq,addOffer,setActionCenter},{actionCenter:null,errMessage:''})

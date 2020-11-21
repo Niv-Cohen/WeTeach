@@ -12,7 +12,13 @@ router.post('/:_id',async (req,res)=>{
     if(!_id){
            res.status(433).send({error:`id was not recieved`})
            }
-      const user = await User.findOne({_id});
+      const user = await User.findOne({_id})
+      .populate({path:'coursesITeach',model:'Course' ,select:'hebName engName _id'
+      })
+      .populate({path:'coursesITake',model:'Course',
+      select:'hebName engName _id subsjects'
+      ,populate:{path:'subjects',model:'Subject',select:'hebName engName'}})
+      .populate({path:'subjectsIHelp',model:'Subject' ,select:'hebName engName _id'});
       if (!user) {
         return res.status(422).send(`${id} wasn't found ` );
       }
@@ -65,15 +71,13 @@ router.post('/:_id',async (req,res)=>{
               try{
                 for(const subject of subjectsIHelp)
              {
-               //subIdList=[];
                   const subjects = await Subject.find({engName:subject.engName});
-                  for(const match of subjects){
+                  for(const match of subjects)
+                  {
                     match.subs=[...match.subs,_id];
                     match.save();
-                    //subIdList=[...subIdList,mathc._id]
                     user.subjectsIHelp=[...user.subjectsIHelp,match]
                   }
-                  //user.subjectsIHelp=[...user.subjectsIHelp,subIdList];
              }
              }catch(err){return res.send(err.message)}
           }

@@ -14,7 +14,6 @@ import SetCourseList from '../components/SetCourseList'
 class Setup extends Component {
 
   static contextType = UserContext;
-
     constructor(props) {
         super(props);
         this.state = {
@@ -35,7 +34,6 @@ class Setup extends Component {
             phase:0 
           }
       }
-
     async componentDidMount() {
         const {data} = await UserApi.get(`/institute`);
         var institutes =[];

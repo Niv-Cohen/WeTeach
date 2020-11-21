@@ -59,7 +59,6 @@ const style =StyleSheet.create({
       LetsSign:{
         alignSelf:'center',
         "right": "11%",
-        "fontFamily": "DM Sans",
         "fontStyle": "normal",
         "fontWeight": "bold",
         "fontSize": 24,

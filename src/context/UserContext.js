@@ -1,16 +1,18 @@
 import createDataContext from './createDataContext';
 import UserApi from '../api/Users'
 import {navigate} from '../NavigationRef'
-import { moveAsync } from 'expo-file-system';
+
 
 
 const userReducer = (state,action) =>{
     switch(action.type){
         case 'edit_User':
             return{...state,user:action.payload}
+        case 'set_raw_data':
+            return{...state,rawData:action.payload}
         case 'set_user':
             return{...state,user:action.payload}
-        case 'save_instData':
+        case 'save_inst_data':
             return{...state,instituteData:action.payload}
         case 'add_err':
             return { ...state ,errMessage: action.payload}
@@ -34,11 +36,20 @@ const userReducer = (state,action) =>{
         return arrayToSend;
     }
 
-
+const setRawInstituteData = dispatch =>async ()=>{
+    try{
+        const {data} = await UserApi.get(`/institute`);
+        console.log(data)
+        dispatch({type:'set_raw_data',payload:data})
+    }
+    catch(err){
+        dispatch({type:'add_err', payload:'Unable to fetch data'})
+    }
+}
 
 const saveInstitutesData = dispatch => ({institutes})=>{
     try{
-    dispatch({type:'set_data',payload:institutes})
+    dispatch({type:'save_inst_data',payload:institutes})
     }
     catch(err){
         dispatch({type:'add_err', payload:'Unable to fetch data'})
@@ -47,8 +58,6 @@ const saveInstitutesData = dispatch => ({institutes})=>{
 
     const setUser = dispatch => async(user)=>{
         dispatch({type:'set_user',payload:user})
-        const response =await UserApi.post('/ActionCenter/create',userId);
-        dispatch({type:'update_action_center',payload:response.data.ac});
     }
 
     const editUser = dispatch => async (_id,params) => {
@@ -75,4 +84,4 @@ const saveInstitutesData = dispatch => ({institutes})=>{
         }
     }
 
-export const {Provider, Context} = createDataContext(userReducer,{setUser,editUser,saveInstitutesData},{instituteData:null,user:null,errMessage:''})
+export const {Provider, Context} = createDataContext(userReducer,{setUser,editUser,saveInstitutesData,setRawInstituteData},{instituteData:null,rawData:null,user:null,errMessage:''})

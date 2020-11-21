@@ -5,6 +5,7 @@ const ActionCenter = require('../models/ActionCenter')
 const Request =require('../models/Request')
 const Lesson =require('../models/Lesson');
 const Offer = require('../models/Offer');
+const User = require('../models/User')
 const router = express.Router();
 
 router.post('/create', async(req,res)=>{
@@ -18,24 +19,33 @@ return res.send(err.message);
 }
 })
 
-router.put('/addReq',async(req,res)=>{
-    const {userId,params}=req.body;
-    const {courseName,subjects,additionalInfo,scedualedTime} = params;
+router.get('/',async(req,res)=>{
+    const {userId}=req.body;
     try{
-       const Req=new Request({courseName,subjects,additionalInfo,scedualedTime})
+        const myAC= await ActionCenter.findOne({userId});
+        res.send(myAC)
+    }catch(err){
+        return res.send(err.message);
+    }
+})
+
+
+
+router.put('/addReq',async(req,res)=>{
+    const {params}=req.body;
+    const {userId,course,subjects,additionalInfo,timeSlots,lessonLength} = params;
+    try{
+       //const student =User.findOne({_id:userId});
+       const req= new Request({course,subjects,additionalInfo,timeSlots,lessonLength})
        const ac= await ActionCenter.findOne({userId});
        if(ac){
-       ac.requests.push(Req);
-       ac.save(err=>{
-           if(err)
-             res.send('Something went wrong')
-           res.send(ac)
-       })
-    }
-}catch(err){
-        return res.send(err.message);
-    }   
-})
+       ac.requests=[...ac.requests,req];
+       await req.save();
+       await ac.save()
+       return res.send({ac})
+       }
+    }catch(err){res.send(err.message)}
+    })
 
 router.put('/addLesson',async(req,res)=>{
     const {userId,tutorId,Date,offer}=req.body;

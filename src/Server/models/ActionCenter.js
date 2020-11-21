@@ -4,38 +4,45 @@ const Subject = require('./Subject');
 const Request= require('./Request');
 const Lesson =require('./Lesson');
 const Offer =require('./Offer');
+
 const CenterScema = mongoose.Schema({
     userId:{
         type:String,
-        unique:true,
         required:true
     },
     requests:{
-        type:[Request.schema],
+        type:[mongoose.Schema.Types.ObjectId],
+        ref:'Request',
         default:[]
     },
     futureTutorLessons:{
-        type:[Lesson.schema],
+        type:[mongoose.Schema.Types.ObjectId],
+        ref:'Lesson',
         default:[]
     },
     futureStudentLessons:{
-        type:[Lesson.schema],
+        type:[mongoose.Schema.Types.ObjectId],
+        ref:'Lesson',
         default:[]
     },
     studentLessonHistory:{
-        type:[Lesson.schema],
+        type:[mongoose.Schema.Types.ObjectId],
+        ref:'Lesson',
         default:[]
     },
     tutorLessonHistory:{
-        type:[Lesson.schema],
+        type:[mongoose.Schema.Types.ObjectId],
+        ref:'Lesson',
         default:[]
     },
     offersSent:{
-        type:[Offer.schema],
+        type:[mongoose.Schema.Types.ObjectId],
+        ref:'Offer',
         default:[]
     },
     conceptTaught:{
-        type:[Offer.schema],
+        type:[mongoose.Schema.Types.ObjectId],
+        ref:'Offer',
         default:[]
     }
 })

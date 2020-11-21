@@ -38,7 +38,6 @@ const SignUpScreen = () =>{
 const style = StyleSheet.create({
   LetsSign:{
     alignSelf:'center',
-    "fontFamily": "DM Sans",
     "fontStyle": "normal",
     "fontWeight": "bold",
     "fontSize": 24,

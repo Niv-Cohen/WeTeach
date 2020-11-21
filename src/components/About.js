@@ -27,7 +27,6 @@ shadowOffset: {
 },
 shadowOpacity: 0.39,
 shadowRadius: 8.30,
-
 elevation: 13,}}>
   <Card.Title >About</Card.Title>
       {edit?<TextInput autoFocus={true}  onChangeText={(text) => setUserAbout(text)} value={userAbout}></TextInput>:<Text >{userAbout}</Text>}

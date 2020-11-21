@@ -3,22 +3,24 @@ const { schema } = require('./Subject');
 
 
 const offerSchema = mongoose.Schema({
-    tutorId:{
-        type:String,
+    tutor:{
+        type:mongoose.Schema.Types.ObjectId,
+        ref:'User',
         required:true
           },
     price:{
-        type:String,
+        type:Number,
         required:true
     },
     Date:{
-        type:String,
+        type:[String],
         required:true
     },
-    studentId:{
-        type:String,
+    student:{
+        type:mongoose.Schema.Types.ObjectId,
+        ref:'User',
         required:true
     }
 })
 
-module.exports = mongoose.model('offer',offerSchema);
+module.exports = mongoose.model('Offer',offerSchema);
