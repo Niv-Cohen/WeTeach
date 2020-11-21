@@ -1,12 +1,12 @@
 import React from 'react'
-import {View,Text,StyleSheet} from 'react-native'
-import { Container, Header, Tab, Tabs} from 'native-base';
-import GeneralRequestsCenter from './GeneralRequestsCenter';
+import { View, Text, StyleSheet } from 'react-native'
+import { Container, Header, Tab, Tabs } from 'native-base';
+import LessonRequestsCenter from './LessonRequestsCenter';
 
 const ConceptRequestsCenter = () => {
-return <>
-<GeneralRequestsCenter/>
-</>
+    return <>
+        <LessonRequestsCenter />
+    </>
 };
 
 
