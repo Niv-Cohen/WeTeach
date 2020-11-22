@@ -2,7 +2,7 @@
 /* eslint-disable linebreak-style */
 
 import React, {useContext} from 'react';
-import {StyleSheet} from 'react-native';
+import {StyleSheet,View} from 'react-native';
 import {Text} from 'react-native-elements';
 import {Button} from 'native-base';
 import Spacer from '../components/Spacer';
@@ -26,6 +26,7 @@ const Congrats = ({state, increaseSection})=>{
       <Text style={{fontWeight: 'bold'}}>You will gain priority over other Student Helper Requests!</Text>
       <Spacer/>
       <Text>Do you wish to join our growing community?</Text>
+      <View style={{flex:1,flexDirection:'row'}}>
       <Button bordered rounded onPress={()=>increaseSection()}>
         <Text>Count me in!</Text>
       </Button>
@@ -35,6 +36,7 @@ const Congrats = ({state, increaseSection})=>{
         }>
         <Text>Maybe later</Text>
       </Button>
+      </View>
     </>
 
   );

@@ -14,10 +14,9 @@ const SignInScreen = () =>{
       style={styles.container}
     >
       <View style={{backgroundColor: 'white', flex: 1} }>
+        <Spacer/>
         <ImageBackground source={require('../../assets/signInBackground.png')}
           imageStyle={{resizeMode: 'cover'}} style={style.backGroundImg}>
-          <Spacer/>
-          <Spacer/>
           <Image style={{alignSelf: 'center', width: 280, marginBottom: 5, marginRight: 20,
             height: 85}} source={require('../../assets/WeTeach_Transparent.png')} />
           <Text style={style.LetsSign}>Let's Sign You In</Text>

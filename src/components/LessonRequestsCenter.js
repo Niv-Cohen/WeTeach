@@ -16,13 +16,10 @@ const LessonRequestsCenter = () => {
 
   useEffect(()=>{
     async function fetchRequests() {
-      console.log(user._id);
       await getReq({userId: user._id});
-      console.log(actionCenter);
     }
     fetchRequests();
   }, []);
-  console.log(actionCenter);
 
   const [offerToDisplay, setOfferToDisplay] = useState(null);
 
@@ -41,7 +38,6 @@ const LessonRequestsCenter = () => {
         content:
         <View>
           <LessonRequestRowCard request={request} />
-
           <Text>Available offers:</Text>
           {offerToDisplay ? <Overlay
             isVisible={offerToDisplay !== null}
@@ -76,7 +72,6 @@ const LessonRequestsCenter = () => {
                 <ListItem.Content>
                   <View flexDirection='row' style={{justifyContent: 'space-around'}} >
                     <View style={{width: '50%'}}>
-                      {/* style={{ justifyContent: 'space-evenly' }} */}
                       <Text>{tutorInfos[offer.tutorID].name}</Text>
                       <Text>Price: {offer.price}</Text>
                     </View>
@@ -95,7 +90,7 @@ const LessonRequestsCenter = () => {
   }
 
   return <>
-    {actionCenter?<Accordion dataArray={dataArray} expanded={0} />:<Spinner/>}
+    {actionCenter&&<Accordion dataArray={dataArray} expanded={0} />}
   </>;
 };
 

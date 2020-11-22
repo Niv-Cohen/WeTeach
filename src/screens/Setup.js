@@ -174,7 +174,7 @@ setName = (fullName)=>{
                 {selectedButtonIndex===1?section===-1?
                 <Spinner/>:
                 section===0?
-                 <SetPersonalInfo increaseSection={this.increaseSection} />
+                 <SetPersonalInfo increaseSection={this.setName} />
                  :section===1?
                  <SetCourseList myInstituteHandler={this.myInstituteHandler} myDegreeHandler={this.myDegreeHandler}
                   toggleCourse={this.toggleCourse} phaseIncreaser={this.phaseIncreaser} phaseReducer={this.phaseReducer} 
@@ -184,7 +184,7 @@ setName = (fullName)=>{
                  <Congrats state={this.state} increaseSection={this.increaseSection}/>:
                  <SetHelper state={this.state} coursePicker={this.coursePicker}  addSubjectToggle={this.addSubjectToggle} />
                  :selectedButtonIndex===0&&section===0?             
-                 <SetPersonalInfo increaseSection={this.increaseSection}/>:
+                 <SetPersonalInfo increaseSection={this.setName}/>:
                  <SetCourseList myInstituteHandler={this.myInstituteHandler} myDegreeHandler={this.myDegreeHandler}
                   toggleCourse={this.toggleCourse} phaseIncreaser={this.phaseIncreaser} phaseReducer={this.phaseReducer} 
                   increaseSection={this.increaseSection} updateSearch={this.updateSearch}

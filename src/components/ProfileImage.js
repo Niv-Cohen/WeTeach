@@ -2,7 +2,6 @@ import React, {useState, useEffect} from 'react';
 import {View, StyleSheet, Text} from 'react-native';
 import * as ImagePicker from 'expo-image-picker';
 
-
 const ProfileImage =({name}) =>{
 
   useEffect(() => {
@@ -24,7 +23,6 @@ const ProfileImage =({name}) =>{
     </View>
   );
 };
-
 
 const style =StyleSheet.create({
   img: {

@@ -122,7 +122,7 @@ class CreateRequestScreen extends Component {
                 </Overlay>
        <View style={{flex:1}}> 
        <SafeAreaView>       
-      <ScrollView>
+      <ScrollView style={{height:'90%'}}>
         <Spacer/>
         <Button bordered rounded style={{alignSelf:'center'} } onPress={() =>this.setState({iscoursesListVisible:!iscoursesListVisible})}>
           <Text>Choose Course And Subjects</Text>

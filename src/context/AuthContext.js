@@ -56,7 +56,7 @@ const signup = (dispatch) =>{
     } catch (err) {
       dispatch({type: 'add_err', payload: err.message});
       console.log(err.message);
-      navigate('mainFlow');
+      navigator. navigate('mainFlow');
     }
   };
 };
@@ -81,10 +81,11 @@ const signin = (dispatch)=>{
 };
 
 const signout = (dispatch) => async () => {
-  await AsyncStorage.removeItem('token');
-  await AsyncStorage.removeItem('id');
+  console.log('Signing out');
+  //await AsyncStorage.removeItem('savedData');
   dispatch({type: 'signout'});
-  navigate('loginFlow');
+  console.log('navigating to main flow');
+  navigate('Signin');
 };
 
 const clearErrMsg = (dispatch)=>{

@@ -15,7 +15,7 @@ const SetPersonalInfo = ({increaseSection})=>{
       />
       <Spacer/>
       <Spacer/>
-      <Button onPress={()=>increaseSection()} 
+      <Button onPress={()=>increaseSection(userName)} 
         style={{alignSelf: 'center'}} disabled={userName===''} rounded bordered>
         <Text>Next</Text>
       </Button>

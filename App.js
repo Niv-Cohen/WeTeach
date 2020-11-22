@@ -27,7 +27,7 @@ const switchNavigator = createSwitchNavigator({
     Signup: SignUpScreen,
     SignInMiddleware: SignInMiddleware,
     SignUpMiddleware: SignUpMiddleware,
-    Setup: Setup,
+    Setup: Setup
   },
   {
     defaultNavigationOptions: {
@@ -37,7 +37,7 @@ const switchNavigator = createSwitchNavigator({
   mainFlow: createBottomTabNavigator({
     Lessons: {screen: LessonsAndConcepts},
     CreateRequestScreen: {screen: CreateRequestScreen},
-    Account: {screen: Account},
+    Account: {screen: Account}
   },
   {
     initialRouteName: 'Account',

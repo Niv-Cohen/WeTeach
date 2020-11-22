@@ -7,16 +7,20 @@ import {navigate} from '../NavigationRef';
 
 
 const SignUpMiddleware = ()=>{
-  // const {createActionCenter,setRawInstituteData}=useContext(ActionCenterContext);
-  // const {state:{user}}=useContext(AuthContext);
-  // const {setUser}=UserContext(UserContext)
+   const {createActionCenter,setRawInstituteData}=useContext(ActionCenterContext);
+   const {state:{user}}=useContext(AuthContext);
+   const {setUser}=useContext(UserContext)
   useEffect(()=>{
+  async function setUp()
+  {
+    setUser(user)
+    await createActionCenter({userId:user._id});
     setTimeout(function() {
       navigate('Setup');
-    }, 3000,
-    );
-  }, []);
-
+      }, 3000)
+    }
+    setUp();
+    }, []);
 
   return (
 

@@ -2,12 +2,13 @@ import React, {useEffect, useContext} from 'react';
 import {StyleSheet, View} from 'react-native';
 import ProfileImg from './ProfileImage';
 import About from './About';
+import {Button, Text}  from 'native-base'
 import {Context as AuthContext} from '../context/AuthContext';
 import {Context as UserContext} from '../context/UserContext';
 import Spacer from './Spacer';
 
 const UserCard = () =>{
-  const {state: {user}} = useContext(AuthContext);
+  const {signout,state: {user}} = useContext(AuthContext);
   const {editUser, state: {rawData, instituteData}}=useContext(UserContext);
   const {about, name, img}=user;
 
@@ -52,7 +53,11 @@ const UserCard = () =>{
   return <View>
     <ProfileImg editUser={editUser} img={img} name={name}/>
     <About about={about} userId={user._id} editUser={editUser}/>
-    
+    <Spacer/>
+    <Button style={{alignSelf:'center'}} rounded bordered 
+    onPress={()=>signout()}>
+      <Text>Signout</Text>
+    </Button>
     <Spacer/>
   </View>
 };

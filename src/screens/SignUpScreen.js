@@ -16,12 +16,11 @@ const SignUpScreen = () =>{
       style={styles.container}
     >
       <View style={{backgroundColor: 'white', flex: 1} }>
+        <Spacer/>
         <ImageBackground source={require('../../assets/signInBackground.png')}
           imageStyle={{resizeMode: 'cover'}}
           style={{width: Dimensions.get('window').width,
             height: Dimensions.get('window').height}}>
-          <Spacer/>
-          <Spacer/>
           <Image style={style.imgStyle}
             source={require('../../assets/WeTeach_Transparent.png')} />
           <Text style={style.LetsSign}>Let's Add You To WeTeach!</Text>
