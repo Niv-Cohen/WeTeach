@@ -15,7 +15,7 @@ const About = ({userId, about, editUser}) =>{
   return (
     <Card containerStyle={styles.card}>
       <Card.Title >About</Card.Title>
-      {edit?<TextInput autoFocus={true}
+      {edit?<TextInput multiline={true} numberOfLines={3} autoFocus={true}
         onChangeText={(text) => setUserAbout(text)}
         value={userAbout}></TextInput>:<Text >{userAbout}</Text>}
       <Icon style={styles.icon} name='edit' size={20} type='font-awesome'
