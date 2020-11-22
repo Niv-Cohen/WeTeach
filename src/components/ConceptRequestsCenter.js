@@ -1,15 +1,11 @@
-import React from 'react'
-import { View, Text, StyleSheet } from 'react-native'
-import { Container, Header, Tab, Tabs } from 'native-base';
+import React from 'react';
 import LessonRequestsCenter from './LessonRequestsCenter';
 
 const ConceptRequestsCenter = () => {
-    return <>
-        <LessonRequestsCenter />
-    </>
+  return <>
+    <LessonRequestsCenter />
+  </>;
 };
 
 
-const Styles = StyleSheet.create({})
-
-export default ConceptRequestsCenter
+export default ConceptRequestsCenter;

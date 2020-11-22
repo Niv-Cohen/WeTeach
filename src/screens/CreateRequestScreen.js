@@ -1,4 +1,4 @@
-import React, { useContext, useState,Component } from 'react';
+import React, {Component} from 'react';
 import { View, StyleSheet, TouchableOpacity, FlatList, ScrollView, SafeAreaView,ImageBackground ,Dimensions} from 'react-native'
 import {Text} from 'react-native-elements'
 import { Chip } from 'react-native-paper';
