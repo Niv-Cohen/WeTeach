@@ -6,7 +6,7 @@ import Spacer from './Spacer';
 
 
 
-const LessonRequestRowCard = ({ request, tutorInfos, offers }) => {
+const LessonRequestRowCard = ({ request }) => {
 
 
   const toTimeString = (time) => {
