@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { View, FlatList, Dimensions, TouchableOpacity, StyleSheet } from 'react-native'
 import { Accordion } from 'native-base';
 import { Text, Button, ListItem, Overlay } from 'react-native-elements';
@@ -7,71 +7,24 @@ import { Feather } from '@expo/vector-icons'
 import Spacer from './Spacer';
 import SearchBar from './SearchBar';
 import LessonRequestRowCard from './LessonRequestRowCard'
-// import { SwipeListView } from 'react-native-swipe-list-view';
-
+import {Context as ActionCenterContext} from '../context/ActionCenterContext'
+import {Context as UserContext} from '../context/UserContext'
 
 
 const LessonRequestsCenter = () => {
-  const start = new Date()
-  let end = new Date(start)
-  let start1 = new Date(start)
-  let end1 = new Date(start)
-  end.setHours(start.getHours() + 1)
-  start1.setHours(start.getHours() + 2)
-  end1.setHours(start.getHours() + 3)
-  const request1 = {
-    courseName: "DAST", subjects: ["AVL", "Heaps"], additionalInfo: "Be interesting", timeSlots:
-      [{
-        dateString: '2020-12-10', slots:
-          [{ dateString: '2020-12-10', start: start, end: end }, { dateString: '2020-12-10', start: start1, end: end1 }]
-      },
-      {
-        dateString: '2020-12-11', slots:
-          [{ dateString: '2020-12-11', start: start, end: end }, { dateString: '2020-12-11', start: start1, end: end1 }]
-      }], lessonLength: 90,
-  }
-  const requests = [request1, request1]
-  const offers = [
-    { tutorID: "100", price: 100, date: new Date(), studentId: "101" },
-    { tutorID: "102", price: 90, date: new Date(), studentId: "101" },
-    { tutorID: "103", price: 70, date: new Date(), studentId: "101" }];
-  const tutorInfos = {
-    "100": {
-      name: "Michael Avraham",
-      coursesITeach: ["אינפי 1", "אינפי 2"],
-      institution: "אוניברסיטת בן גוריון שבנגב",
-      Degree: "מדעי במחשב",
-      about: "מכל מלמדי השכלתי"
-    },
-    "102": {
-      name: "Yossi Bitton",
-      coursesITeach: ["כימיה אורגנית", "ביולוגיה של התא"],
-      institution: "אוניברסיטת תל אביב",
-      Degree: "מדעי החי",
-      about: "מכל המורים שלי השכלתי"
-    },
-    "103": {
-      name: "Yair Sivan",
-      coursesITeach: ["סוגיות של צדק ביחסים בין לאומיים", "מבוא לפילוסופיה"],
-      institution: "טכניון",
-      Degree: "מדעי המדינה",
-      about: "אין חכם כבעל ניסיון"
-    }
-  }
+  const {getReq,state:{actionCenter}}=useContext(ActionCenterContext);
+  const {state:{user}}=useContext(UserContext)
 
-  // tutorInfo name, img, coursesITeach,  institution, Degree, about
-
-  useEffect(() => {
-    //get requests
-    let tutorIDs = new Set()
-    for (req of requests) {
-      // get offers
-      for (offer of offers) {
-        tutorIDs.add(offer.tutorID)
-      }
+  useEffect(()=>{
+    async function fetchRequests(){
+      console.log(user._id)
+      await getReq({userId:user._id});
+      console.log(actionCenter)
     }
-    // get tutorInfos
-  }, [])
+    fetchRequests()
+  },[])
+  console.log(actionCenter)
+
   const [offerToDisplay, setOfferToDisplay] = useState(null)
 
   const toTimeString = (time) => {
@@ -79,9 +32,12 @@ const LessonRequestsCenter = () => {
     return timeString.substr(0, timeString.length - 3)
   }
   const dataArray = []
-  for (request of requests) {
+if(actionCenter){
+  const {requests}=actionCenter;
+     for (const request of requests) {
+       const {offers}=request;
     dataArray.push({
-      title: <Text>Course: {request.courseName}. Lesson length: {request.lessonLength}</Text>,
+      title: <Text>Course: {request.course.hebName}. Lesson length: {request.lessonLength}</Text>,
       content:
         <View>
           <LessonRequestRowCard request={request} />
@@ -126,11 +82,11 @@ const LessonRequestsCenter = () => {
         </View>
     })
   }
-  return <>
-    <Accordion dataArray={dataArray} expanded={0} />
-  </>
-  {/* courseName:string, subjects:[string], additionalInfo:String, timeSlots:[], lessonLength */ }
+}
 
+  return <>
+    {actionCenter&&<Accordion dataArray={dataArray} expanded={0} />}
+  </>
 };
 
 

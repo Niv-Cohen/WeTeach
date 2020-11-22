@@ -27,12 +27,13 @@ router.post('/:_id',async (req,res)=>{
 
   router.put('/', async (req,res) => {
      const {_id,params} =req.body;
-     const {about,img,coursesITeach,coursesITake,subjectsIHelp}=params
+     const {about,img,coursesITeach,coursesITake,subjectsIHelp,fullName}=params
      let coursesList =[]
-     
             let user= await User.findOne({_id})
             if(user)
             {
+                if(fullName)
+                    user.name=fullName;
                 if(about)
                     user.about=about;
                 if(img)

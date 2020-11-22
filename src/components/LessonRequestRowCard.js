@@ -24,7 +24,7 @@ const LessonRequestRowCard = ({ request }) => {
           keyExtractor={(item) => item}
           renderItem={({ item }) => {
             return (
-              <Chip style={{ alignSelf: 'flex-start' }}>{item}</Chip>)
+              <Chip style={{ alignSelf: 'flex-start' }}>{item.hebName!==''?item.hebName:item.engName}</Chip>)
           }}
         />
         {request.additionalInfo ? <View>

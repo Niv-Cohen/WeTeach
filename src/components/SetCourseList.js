@@ -64,7 +64,7 @@ import { ScrollView } from 'react-native-gesture-handler';
                 return(
                     <>
                       <LowerButtons  onPressFun={phaseReducer} buttonText={'Back'} iconName={'arrow-forward'}/>
-                      <Button bordered rounded disabled={myCourses.length===0?true:false} onPress={tutor?()=>editUser(userId,{coursesITeach:{myInstitute,myDegree,myCourses}}):()=>increaseSection()}>
+                      <Button bordered rounded disabled={myCourses.length===0?true:false} onPress={tutor?()=>editUser(userId,{coursesITeach:{myInstitute,myDegree,myCourses},fullName}):()=>increaseSection()}>
                       <Text >Finish</Text>
                       </Button>
                     </>

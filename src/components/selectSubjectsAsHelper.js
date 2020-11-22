@@ -40,7 +40,7 @@ return(
                   </ScrollView>
                   </View>
                   <View>
-                   <Button disabled={subjectsIHelp.size===0?true:false} onPress={()=>editUser(userId,{subjectsIHelp:subjectsIHelp,coursesITake:{myInstitute,myCourses,myDegree}})}>
+                   <Button disabled={subjectsIHelp.size===0?true:false} onPress={()=>editUser(userId,{subjectsIHelp:subjectsIHelp,coursesITake:{myInstitute,myCourses,myDegree},fullName})}>
                      <Text>Subscribe</Text>
                    </Button>
                  </View>

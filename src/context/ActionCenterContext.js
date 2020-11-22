@@ -4,8 +4,10 @@ import { navigate } from '../NavigationRef';
 
 const actionCenterReducer = (state,action) =>{
     switch(action.type){
-        case 'edit_Action_Center':
+        case 'edit_action_aenter':
             return{...state,actionCenter:action.payload}
+        case 'edit_req':
+            return {...state,requests:action.payload}
         case 'add_err':
             return { ...state ,errMessage: action.payload}
         case 'clear_err':
@@ -38,6 +40,16 @@ const setActionCenter = dispatch =>async (userId)=>{
     }
 }
 
+    const getReq = dispatch =>async ({userId})=>{
+        try{
+            console.log('Fetching Requests');
+            console.log(userId)
+            const response = await UserApi.post('/ActionCenter/getReq',{userId})
+            dispatch({type:'edit_action_aenter',payload:response.data.ac})
+        }catch(err){
+            dispatch({type:'add_err',payload:err})
+        }
+    }
 
 const addOffer = dispatch => async({studentId,tutorId,price,Date,reqId})=>{
     try{
@@ -76,4 +88,4 @@ const setLesson = dispatch => async ({chosenOffer})=>{
     }
 }
 
-export const {Provider, Context} = createDataContext(actionCenterReducer,{createActionCenter,setLesson,addReq,addOffer,setActionCenter},{actionCenter:null,errMessage:''})
+export const {Provider, Context} = createDataContext(actionCenterReducer,{createActionCenter,setLesson,addReq,addOffer,setActionCenter,getReq},{requests:[],actionCenter:null,errMessage:''})

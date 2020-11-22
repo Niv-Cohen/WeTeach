@@ -1,5 +1,5 @@
 import React ,{useState,useEffect}from 'react'
-import {View,StyleSheet,Text,FlatList } from 'react-native'
+import {View,StyleSheet,Text,FlatList,Image } from 'react-native'
 import { ImageManipulator } from 'expo-image-crop';
 import * as ImagePicker from 'expo-image-picker';
 import { Avatar, Overlay,Button,ButtonGroup } from 'react-native-elements';
@@ -84,8 +84,6 @@ const ProfileImage =({name,editPhoto}) =>{
             onToggleModal={onToggleModal}
         />
     <View style={{alignSelf:'center', marginVertical:30}}>
-    <Avatar size="xlarge"  rounded onPress={toggleOverlay}
-    source={{uri: uri,}} />
     <Text h4 style={{marginRight:10,fontFamily:'sans-serif-light',fontSize:20,fontWeight:'bold'}}>{name}</Text> 
     </View>
     <Overlay isVisible={layout} onBackdropPress={toggleOverlay} overlayStyle={{width:300,height:400}}>
@@ -108,8 +106,8 @@ const ProfileImage =({name,editPhoto}) =>{
 
 const style =StyleSheet.create({
     img:{
-        width:200,
-        height:100,
+        width:50,
+        height:50,
         alignSelf:"center"
     }
 

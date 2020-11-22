@@ -1,7 +1,7 @@
 import React,{Component} from 'react'
-import {View,StyleSheet,ScrollView} from 'react-native'
+import {View,StyleSheet,ScrollView,ImageBackground,Dimensions} from 'react-native'
 import { Overlay,Text,ButtonGroup } from 'react-native-elements';
-
+import SetPersonalInfo from '../components/SetPersonalInfo';
 import Spinner from '../components/Spinner';
 import Congrats from '../components/Congrats';
 import UserApi from '../api/Users';
@@ -31,7 +31,8 @@ class Setup extends Component {
             myInstitute:null,
             myDegree:null,
             myCourses:[],
-            phase:0 
+            fullName:'',
+            phase:0
           }
       }
     async componentDidMount() {
@@ -133,12 +134,12 @@ class Setup extends Component {
       }
       //add subject to course list
       else{
-          console.log('push subject into exsisting list');
-          updatedSubjectsList=subjectsIHelp.get(courseName);
+           console.log('push subject into exsisting list');
+           updatedSubjectsList=subjectsIHelp.get(courseName);
            updatedSubjectsList=updatedSubjectsList.concat([selectedSubject]);
            updatedMap =subjectsIHelp;
            updatedMap.set(courseName,updatedSubjectsList);
-    }
+          }
   }
   this.setState({subjectsIHelp:updatedMap})
   console.log(subjectsIHelp);
@@ -147,6 +148,11 @@ class Setup extends Component {
  updateSearch = (search) => {
   this.setState({search});
 };
+
+setName = (fullName)=>{
+    this.setState({fullName,section:this.state.section+1})
+}
+
 
   increaseSection= ()=>{
     this.setState({section:this.state.section +1})
@@ -157,35 +163,36 @@ class Setup extends Component {
   updateIndex =(selectedButtonIndex)=> {
     this.setState({selectedButtonIndex,tutor:!this.state.tutor,phase:selectedButtonIndex===1?0:3})
   }
-
    render() {
       const {section,selectedButtonIndex}=this.state
     return(
+      <ImageBackground source={require('../../assets/SetupBackground.png')} imageStyle={{resizeMode:'cover'}} style={{ width: Dimensions.get('window').width,
+    height: Dimensions.get('window').height}}>
             <View>
-                 <Overlay visible={true} overlayStyle={{width:300,height:550}}>
-                <SetupButtonGroup selected={selectedButtonIndex} setSelected={this.updateIndex}/>
+                 <Overlay visible={true}  overlayStyle={{width:300,height:450}}>
+                {section>0&&<SetupButtonGroup selected={selectedButtonIndex} setSelected={this.updateIndex}/>}
                 {selectedButtonIndex===1?section===-1?
-                 <Spinner/>
-                 :section===0?
+                <Spinner/>:
+                section===0?
+                 <SetPersonalInfo increaseSection={this.increaseSection} />
+                 :section===1?
                  <SetCourseList myInstituteHandler={this.myInstituteHandler} myDegreeHandler={this.myDegreeHandler}
                   toggleCourse={this.toggleCourse} phaseIncreaser={this.phaseIncreaser} phaseReducer={this.phaseReducer} 
                   increaseSection={this.increaseSection} updateSearch={this.updateSearch}
                  state={this.state}/>
-                 :section===1?
+                 :section===2?
                  <Congrats state={this.state} increaseSection={this.increaseSection}/>:
                  <SetHelper state={this.state} coursePicker={this.coursePicker}  addSubjectToggle={this.addSubjectToggle} />
-                 :selectedButtonIndex===0&&
-                 <>
-               
+                 :selectedButtonIndex===0&&section===0?             
+                 <SetPersonalInfo increaseSection={this.increaseSection}/>:
                  <SetCourseList myInstituteHandler={this.myInstituteHandler} myDegreeHandler={this.myDegreeHandler}
                   toggleCourse={this.toggleCourse} phaseIncreaser={this.phaseIncreaser} phaseReducer={this.phaseReducer} 
                   increaseSection={this.increaseSection} updateSearch={this.updateSearch}
                  state={this.state}/>
-                 
-                 </>
                  }
                </Overlay>
-               </View>)
+               </View>
+               </ImageBackground>)
 }}
 
 

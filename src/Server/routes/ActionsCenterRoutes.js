@@ -29,6 +29,22 @@ router.get('/',async(req,res)=>{
     }
 })
 
+router.post('/getReq',async(req,res)=>{
+    const {userId} =req.body;
+    try{
+        const ac= await ActionCenter.findOne({userId})
+        .populate({path:'requests',model:'Request',
+        populate:[{path:'course',model:'Course'},{path:'subjects',model:'Subject'}
+        ,{path:'offers',model:'Offer'}]})
+        if(ac)
+           return res.send({ac});
+        else
+            return res.send("No Action Center was found")
+    }
+        catch(err){
+            return res.send(err.message)
+        }
+})
 
 
 router.put('/addReq',async(req,res)=>{

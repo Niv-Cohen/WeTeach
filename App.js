@@ -15,7 +15,7 @@ import CreateRequestScreen from './src/screens/CreateRequestScreen';
 import SignInMiddleware from './src/screens/SignInMiddleware';
 import SignUpMiddleware from './src/screens/SignUpMiddleware';
 import example from './src/components/Examples';
-import setup from './src/screens/Setup';
+import Setup from './src/screens/Setup';
 import { LogBox } from 'react-native';
 
 import {Provider as AuthProvider} from './src/context/AuthContext'
@@ -29,7 +29,8 @@ const switchNavigator = createSwitchNavigator({
      Signin:SignInScreen,
      Signup:SignUpScreen,
      SignInMiddleware:SignInMiddleware,
-     SignUpMiddleware:SignUpMiddleware
+     SignUpMiddleware:SignUpMiddleware,
+     Setup:Setup
    },
    {
         defaultNavigationOptions:{
@@ -41,11 +42,9 @@ const switchNavigator = createSwitchNavigator({
         }
    }),
    mainFlow:createBottomTabNavigator({
-      setup:{screen:setup},
-      Concept:{screen:ConceptTeaching},
+       Lessons:{screen:LessonsAndConcepts},
        CreateRequestScreen:{screen:CreateRequestScreen},
-     // Lessons:{screen:LessonsPannel},
-      Account:{screen: Account,title:'משתמש'},
+       Account:{screen: Account},
    },
    {
     initialRouteName:'Account',

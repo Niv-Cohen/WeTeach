@@ -13,7 +13,7 @@ const SignInScreen = () =>{
         style={styles.container}
       >
             <View style={{backgroundColor:'white' ,flex:1} }>
-                <ImageBackground source={require('../../assets/signInBackground.png')} imageStyle={{resizeMode:'cover'}} style={{ width: Dimensions.get('window').width,
+                <ImageBackground source={require('../../assets/signInBackground.png')} imageStyle={{resizeMode:'center'}} style={{ width: Dimensions.get('window').width,
     height: Dimensions.get('window').height}}>
             <Spacer/>
             <Spacer/>

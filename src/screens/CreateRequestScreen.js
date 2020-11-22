@@ -10,7 +10,7 @@ import DateTimePicker from '@react-native-community/datetimepicker';
 import { TextInput } from 'react-native-paper';
 import Spacer from '../components/Spacer';
 import LessonLengthButtons from '../components/LessonLengthButtons'
-import { Feather } from '@expo/vector-icons'
+import { Feather,Octicons } from '@expo/vector-icons'
 import NewRequestMiddleware from './NewRequestMiddleware';
 
 class CreateRequestScreen extends Component {
@@ -331,18 +331,20 @@ class CreateRequestScreen extends Component {
               <Text style={{fontWeight:'bold'}}>Submit</Text>
             </Button>
             {isSubmited&&<NewRequestMiddleware userId={userId} additionalInfo={reqNotes} course={courseSelected} lessonLength={lessonLength} subjects={subjectsSelected} timeSlots={myAvailability}/>}
-           <Text>just in case</Text>
            </ScrollView>
            </SafeAreaView>
             </View>
             </ImageBackground> 
 </>
-
-
       /* courseName:string, subjects:[string], additionalInfo:String, timeSlots:[], lessonLength */
   )
                                 }}
   
+
+ CreateRequestScreen.navigationOptions = {
+   tabBarIcon: <Octicons name="diff-added" size={26} />
+  };
+                                
 
 const styles = StyleSheet.create({
   backgroundStyle: {

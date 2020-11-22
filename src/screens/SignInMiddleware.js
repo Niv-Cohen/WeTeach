@@ -12,9 +12,8 @@ const SignInMiddleware = ()=>{
     useEffect(()=>{
         setUser(user);
         async function setUpData(){
-        // await setRawInstituteData();
-        // setActionCenter(user._id)
-        navigate('Account')
+            setTimeout(function(){ navigate('Account') }, 3000)
+        
         }
         setUpData();
         
