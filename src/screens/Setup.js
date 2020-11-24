@@ -169,7 +169,7 @@ setName = (fullName)=>{
       <ImageBackground source={require('../../assets/SetupBackground.png')} imageStyle={{resizeMode:'cover'}} style={{ width: Dimensions.get('window').width,
     height: Dimensions.get('window').height}}>
             <View>
-                 <Overlay visible={true}  overlayStyle={{width:300,height:450}}>
+                 <Overlay visible={true}  overlayStyle={{width:300,height:600}}>
                 {section>0&&<SetupButtonGroup selected={selectedButtonIndex} setSelected={this.updateIndex}/>}
                 {selectedButtonIndex===1?section===-1?
                 <Spinner/>:
@@ -226,10 +226,4 @@ styles = StyleSheet.create({
   });
 
 
-export default Setup;              
-
-
- 
-      
-
-
+export default Setup;     

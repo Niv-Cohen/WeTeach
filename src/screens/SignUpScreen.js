@@ -13,8 +13,7 @@ const SignUpScreen = () =>{
 
     <KeyboardAvoidingView
       behavior={Platform.OS == 'ios' ? 'padding' : 'height'}
-      style={styles.container}
-    >
+      style={styles.container}>
       <View style={{backgroundColor: 'white', flex: 1} }>
         <Spacer/>
         <ImageBackground source={require('../../assets/signInBackground.png')}

@@ -15,7 +15,7 @@ const SetCourseList = ({state, updateSearch, myInstituteHandler,
   , phaseReducer, increaseSection}) => {
   const {editUser}=useContext(UserContext);
   const {phase, institutes, myInstitute, myDegree,
-    myCourses, search, tutor, userId}=state;
+    myCourses, search, tutor, userId,fullName}=state;
   const switchListCases=()=>{
     if (institutes) {
       switch (phase%3) {

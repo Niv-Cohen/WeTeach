@@ -9,8 +9,8 @@ const SignInMiddleware = ()=>{
   const {setUser}=useContext(UserContext);
 
   useEffect(()=>{
+    setUser(user)
     async function setUpData() {
-      setUser(user);
       setTimeout(function() {
         navigate('Account');
       }, 3000);

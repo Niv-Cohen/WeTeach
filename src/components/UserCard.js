@@ -8,10 +8,9 @@ import {Context as UserContext} from '../context/UserContext';
 import Spacer from './Spacer';
 
 const UserCard = () =>{
-  const {signout,state: {user}} = useContext(AuthContext);
-  const {editUser, state: {rawData, instituteData}}=useContext(UserContext);
+  const {signout} = useContext(AuthContext);
+  const {editUser, state: {user,rawData, instituteData}}=useContext(UserContext);
   const {about, name, img}=user;
-
   useEffect(()=>{
     if (instituteData!==null) {
       const data = rawData;

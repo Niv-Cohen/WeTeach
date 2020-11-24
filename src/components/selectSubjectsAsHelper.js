@@ -11,7 +11,7 @@ import {Context as UserContext} from '../context/UserContext';
 import Spacer from '../components/Spacer';
 
 const selectSubjcetsAsHelper = ({state, coursePicker, addSubjectToggle})=>{
-  const {institutes, userId, subjectsIHelp,
+  const {institutes, userId, subjectsIHelp, fullName,
     myInstitute, myDegree, selectedCourse, myCourses}=state;
   const {editUser}=useContext(UserContext);
   return (
@@ -49,8 +49,8 @@ const selectSubjcetsAsHelper = ({state, coursePicker, addSubjectToggle})=>{
       </View>
       <View>
         <Button disabled={subjectsIHelp.size===0?true:false}
-          onPress={()=>editUser(userId, {subjectsIHelp: subjectsIHelp,
-            coursesITake: {myInstitute, myCourses, myDegree}, fullName})}>
+          onPress={()=> editUser(userId, {subjectsIHelp: subjectsIHelp,
+            coursesITake: {myInstitute, myCourses, myDegree},fullName})}>
           <Text>Subscribe</Text>
         </Button>
       </View>

@@ -9,11 +9,10 @@ import LessonRequestRowCard from './LessonRequestRowCard';
 import {Context as ActionCenterContext} from '../context/ActionCenterContext';
 import {Context as UserContext} from '../context/UserContext';
 
-
 const LessonRequestsCenter = () => {
   const {getReq, state: {actionCenter}}=useContext(ActionCenterContext);
   const {state: {user}}=useContext(UserContext);
-
+  console.log(user)
   useEffect(()=>{
     async function fetchRequests() {
       await getReq({userId: user._id});

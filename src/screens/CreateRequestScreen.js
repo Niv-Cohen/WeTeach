@@ -97,17 +97,18 @@ class CreateRequestScreen extends Component {
                   <ScrollView style={{marginVertical:120, flex:1}} showsVerticalScrollIndicator={false}>
                   {coursesITake&&coursesITake.map((course=>{
                     return(
-                      <Chip style={courseSelected?course.hebName===courseSelected.hebName&&styles.selectedChip:styles.chip} 
+                      <Chip style={courseSelected?course.hebName===courseSelected.hebName&&styles.selectedChip:styles.selectedChip} 
                       onPress={()=>this.setSelectedCourse(course)}>
+                        {console.log(course.hebName)}
                         {course.hebName}
                       </Chip>
+                      
                     )
                   }))}
                   </ScrollView>
                    </View>   
                    <Spacer/>    
                    <View style={{flex:1.5,  flexWrap:'wrap', flexDirection: 'row', alignItems:'flex-start' , justifyContent: 'flex-start'}}>
-                  <ScrollView showsVerticalScrollIndicator={false}>
                   {coursesITake&&courseSelected&&coursesITake.map((course)=>course.hebName===courseSelected.hebName&&course.subjects.
                   map(subject=>
                   {return(
@@ -116,8 +117,7 @@ class CreateRequestScreen extends Component {
                     ?styles.selectedChip:styles.chip}
                    onPress={()=>this.subjectsToggle(subject)} >
                       {subject.hebName!==''?subject.hebName:subject.engName}
-                  </Chip>)}))}
-                  </ScrollView>               
+                  </Chip>)}))}        
                 </View>              
                 </Overlay>
        <View style={{flex:1}}> 
@@ -366,10 +366,8 @@ const styles = StyleSheet.create({
     marginHorizontal: 15
   },
   chip:{
-      marginVertical:10
   },
   selectedChip:{
-    marginVertical:10,
     backgroundColor:'#a7cfbc'
   }
   

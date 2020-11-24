@@ -27,7 +27,7 @@ router.put('/', async (req, res) => {
   const {_id, params} =req.body;
   const {about, img, coursesITeach, coursesITake, subjectsIHelp, fullName}=params;
   let coursesList =[];
-  const user= await User.findOne({_id});
+  let user= await User.findOne({_id})
   if (user) {
     if (fullName) {
       user.name=fullName;
@@ -85,7 +85,12 @@ router.put('/', async (req, res) => {
       }
     }
     await  user.save();
-    return res.send(user);
+    user= await User.findOne({_id}).populate({path: 'coursesITeach', model: 'Course', select: 'hebName engName _id',})
+    .populate({path: 'coursesITake', model: 'Course',
+      select: 'hebName engName _id subsjects',
+      populate: {path: 'subjects', model: 'Subject', select: 'hebName engName'}})
+    .populate({path: 'subjectsIHelp', model: 'Subject', select: 'hebName engName _id'});
+    return res.send({user});
   }
 });
 

@@ -4,8 +4,8 @@ import {navigate} from '../NavigationRef';
 
 const userReducer = (state, action) =>{
   switch (action.type) {
-    case 'edit_User':
-      return {...state, user: action.payload};
+    case 'edit_user': 
+      return {...state, user: action.payload}
     case 'set_raw_data':
       return {...state, rawData: action.payload};
     case 'set_user':
@@ -50,6 +50,7 @@ const saveInstitutesData = (dispatch) => ({institutes})=>{
 };
 
 const setUser = (dispatch) => async (user)=>{
+  console.log('Setting user');
   dispatch({type: 'set_user', payload: user});
 };
 
@@ -57,18 +58,20 @@ const editUser = (dispatch) => async (_id, params) => {
   try {
     console.log('Im in edituser func');
     const {subjectsIHelp}=params;
-    console.log(params)
-    console.log(_id)
+    // console.log(params)
+    // console.log(_id)
 
     if (subjectsIHelp) {
       params.subjectsIHelp=convertToArr(subjectsIHelp);
-      console.log(params.subjectsIHelp);
+      //console.log(params.subjectsIHelp);
     }
 
     const response = await UserApi.put(`/user/`, {_id, params});
+    const {user}= response.data;
     console.log('user was edited');
     console.log('now navigating to mainFlow');
-    dispatch({type: 'edit_user', payload: response.data.user});
+    console.log(user)
+    dispatch({type: 'edit_user', payload:user});
     navigate('Account');
   } catch (err) {
     dispatch({type: 'add_err', payload: 'Something went wrong'});

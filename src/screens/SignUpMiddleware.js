@@ -14,7 +14,7 @@ const SignUpMiddleware = ()=>{
   async function setUp()
   {
     setUser(user)
-    await createActionCenter({userId:user._id});
+    //await createActionCenter({userId:user._id});
     setTimeout(function() {
       navigate('Setup');
       }, 3000)
