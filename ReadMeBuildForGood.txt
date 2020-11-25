@@ -10,3 +10,8 @@ connected in to mongo instance
 
 5)in root folder of the project use command 'npm start' you should now be able to see the login screen.
 
+
+
+Use this user:
+email:nivk@post.bgu.ac.il
+password:Appflyer

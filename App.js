@@ -21,7 +21,7 @@ import {Provider as UserProvider} from './src/context/UserContext';
 import {Provider as ActionCenterProvider} from './src/context/ActionCenterContext';
 LogBox.ignoreAllLogs(true);
 const switchNavigator = createSwitchNavigator({
-  //TryLocalSignin: TryLocalSignin,
+  TryLocalSignin: TryLocalSignin,
   loginFlow: createStackNavigator({
     Signin: SignInScreen,
     Signup: SignUpScreen,
