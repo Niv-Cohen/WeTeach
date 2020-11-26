@@ -15,7 +15,6 @@ const SignUpScreen = () =>{
       behavior={Platform.OS == 'ios' ? 'padding' : 'height'}
       style={styles.container}>
       <View style={{backgroundColor: 'white', flex: 1} }>
-        <Spacer/>
         <ImageBackground source={require('../../assets/signInBackground.png')}
           imageStyle={{resizeMode: 'cover'}}
           style={{width: Dimensions.get('window').width,

@@ -71,7 +71,7 @@ const style = StyleSheet.create({
   errMessage: {
     fontSize: 16,
     color: 'red',
-    marginRight: 15,
+    marginLeft: 45,
     fontWeight: 'bold',
   },
   titleStyle:{

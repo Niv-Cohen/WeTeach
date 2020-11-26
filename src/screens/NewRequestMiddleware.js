@@ -1,9 +1,10 @@
 import React, {useContext, useEffect} from 'react';
 import {Context as ActionCenterContext} from '../context/ActionCenterContext';
 import {ImageBackground, Dimensions} from 'react-native';
+import {navigate} from '../NavigationRef';
 
 const NewRequestMiddleware =({userId, course, subjects,
-  additionalInfo, lessonLength, timeSlots})=>{
+  additionalInfo, lessonLength, timeSlots,resetFunc})=>{
   const {addReq}=useContext(ActionCenterContext);
 
   useEffect(()=>{
@@ -23,6 +24,8 @@ const NewRequestMiddleware =({userId, course, subjects,
       });
       timeSlots=timeSlotsToSend;
       await addReq({userId, course, subjects, additionalInfo, timeSlots, lessonLength});
+      resetFunc();
+      navigate('Account');
     }
     createNewReq();
   }, []);

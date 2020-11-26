@@ -74,7 +74,6 @@ const addReq = (dispatch)=> async ({userId, course, subjects,
     console.log(response.data.ac);
     console.log('about to navigate');
     dispatch({type: 'update_action_center', payload: response.data.ac});
-    navigate('Account');
   } catch (err) {
     dispatch({type: 'add_err', payload: 'Something went wrong'});
     console.log(err.message);

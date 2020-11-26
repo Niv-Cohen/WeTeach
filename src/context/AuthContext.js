@@ -33,7 +33,6 @@ const tryLocalSignin = (dispatch) => async () => {
     dispatch({type: 'set_user', payload: user});
     navigate('SignInMiddleware');
   } catch (err) {
-    console.log(err.message);
     navigate('Signin');
   }
 };
@@ -54,8 +53,7 @@ const signup = (dispatch) =>{
       dispatch({type: 'set_user', payload: user});
       navigate('SignUpMiddleware');
     } catch (err) {
-      dispatch({type: 'add_err', payload: err.message});
-      console.log(err.message);
+      dispatch({type: 'add_err', payload: 'Something went wrong with sign up'});
       navigator. navigate('mainFlow');
     }
   };
@@ -75,7 +73,7 @@ const signin = (dispatch)=>{
       dispatch({type: 'set_user', payload: user});
       navigate('SignInMiddleware');
     } catch (err) {
-      dispatch({type: 'add_err', payload: err.message});
+      dispatch({type: 'add_err', payload: 'Something went wrong with sign in'});
     }
   };
 };

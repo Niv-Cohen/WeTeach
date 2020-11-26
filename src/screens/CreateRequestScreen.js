@@ -50,6 +50,11 @@ class CreateRequestScreen extends Component {
 
   }
 
+  resetAll = () =>{
+    this.setState({isSubmited:false, subjectsSelected:[], courseSelected:null, 
+      reqNotes:'', lessonLength:45,lessonLengthIndex:0, myAvailability:{}})
+  }
+
   getAvailabilty = () => {
     let arr = []
     for (const property in this.state.myAvailability) {
@@ -114,7 +119,7 @@ class CreateRequestScreen extends Component {
                   map(subject => {
                     return (
                       <Chip
-                        style={subjectsSelected.some(selectedSubject => selectedSubject.engName === subject.engName)
+                        style={subjectsSelected&&subjectsSelected.some(selectedSubject => selectedSubject.engName === subject.engName)
                           ? styles.selectedChip : styles.chip}
                         onPress={() => this.subjectsToggle(subject)} >
                         {subject.hebName !== '' ? subject.hebName : subject.engName}
@@ -137,7 +142,7 @@ class CreateRequestScreen extends Component {
                 <Spacer />
                 <View style={{ alignSelf: 'flex-start', flex: 1, flexWrap: 'wrap', flexDirection: 'row', alignSelf: 'stretch', justifyContent: 'flex-start' }}>
                   <Text h4 style={{ alignSelf: 'center' }}>Subjects: </Text>
-                  {subjectsSelected.map(subject => {
+                  {subjectsSelected&&subjectsSelected.map(subject => {
                     return (<Chip style={{ marginHorizontal: 4, marginVertical: 5 }}>
                       {subject.hebName !== '' ? subject.hebName : subject.engName}
                     </Chip>)
@@ -344,7 +349,7 @@ class CreateRequestScreen extends Component {
                   <Text style={{ fontWeight: 'bold', paddingHorizontal: 3 }}>Submit</Text>
                 </Button>
                 <View style={{ height: 50 }} />
-                {isSubmited && <NewRequestMiddleware userId={userId} additionalInfo={reqNotes} course={courseSelected} lessonLength={lessonLength} subjects={subjectsSelected} timeSlots={myAvailability} />}
+                {isSubmited && <NewRequestMiddleware userId={userId} additionalInfo={reqNotes} course={courseSelected} lessonLength={lessonLength} subjects={subjectsSelected} timeSlots={myAvailability} resetFunc={this.resetAll} />}
               </ScrollView>
             </SafeAreaView>
           </View>

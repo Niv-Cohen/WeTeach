@@ -3,7 +3,6 @@
 import React, {useState, useEffect, useContext} from 'react';
 import {View, TouchableOpacity, StyleSheet} from 'react-native';
 import {Accordion} from 'native-base';
-import Spinner from './Spinner';
 import {Text, Button, ListItem, Overlay} from 'react-native-elements';
 import LessonRequestRowCard from './LessonRequestRowCard';
 import {Context as ActionCenterContext} from '../context/ActionCenterContext';
@@ -12,10 +11,11 @@ import {Context as UserContext} from '../context/UserContext';
 const LessonRequestsCenter = () => {
   const {getReq, state: {actionCenter}}=useContext(ActionCenterContext);
   const {state: {user}}=useContext(UserContext);
-  console.log(user)
+  console.log('---------------------------')
+  //console.log(actionCenter.requests.length)
   useEffect(()=>{
     async function fetchRequests() {
-      await getReq({userId: user._id});
+     await getReq({userId: user._id});
     }
     fetchRequests();
   }, []);
@@ -26,7 +26,7 @@ const LessonRequestsCenter = () => {
     const timeString = time.toLocaleTimeString();
     return timeString.substr(0, timeString.length - 3);
   };
-  const dataArray = [];
+  let dataArray = [];
   if (actionCenter) {
     const {requests}=actionCenter;
     for (const request of requests) {

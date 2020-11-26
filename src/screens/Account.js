@@ -11,7 +11,7 @@ const Account = ({route, navigation}) => {
   }, []);
 
   return (
-
+    <View>
     <ImageBackground source={require('../../assets/SetupBackground.png')}
       imageStyle={{resizeMode: 'cover'}}
       style={{width: Dimensions.get('window').width,
@@ -22,6 +22,7 @@ const Account = ({route, navigation}) => {
         </View>
       </ScrollView>
     </ImageBackground>
+    </View>
   );
 };
 

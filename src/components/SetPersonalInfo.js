@@ -1,4 +1,5 @@
 import React, {useState} from 'react';
+import {KeyboardAvoidingView} from 'react-native'
 import {Input} from 'react-native-elements';
 import {Button, Text} from 'native-base';
 import Spacer from './Spacer';
@@ -7,6 +8,7 @@ const SetPersonalInfo = ({increaseSection})=>{
   const [userName, setUserName]=useState('');
   return (
     <>
+    <KeyboardAvoidingView>
       <Spacer/>
       <Spacer/>
       <Input
@@ -19,6 +21,7 @@ const SetPersonalInfo = ({increaseSection})=>{
         style={{alignSelf: 'center'}} disabled={userName===''} rounded bordered>
         <Text>Next</Text>
       </Button>
+      </KeyboardAvoidingView>
     </>
   );
 };

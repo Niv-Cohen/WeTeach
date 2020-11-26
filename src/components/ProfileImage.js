@@ -1,6 +1,7 @@
 import React, {useState, useEffect} from 'react';
 import {View, StyleSheet, Text} from 'react-native';
 import * as ImagePicker from 'expo-image-picker';
+import Spacer from './Spacer';
 
 const ProfileImage =({name}) =>{
 
@@ -17,6 +18,8 @@ const ProfileImage =({name}) =>{
 
   return (
     <View>
+      <Spacer/>
+      <Spacer/>
       <Text h4 style={style.nameText}>
         {name}
       </Text>

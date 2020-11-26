@@ -14,7 +14,6 @@ const SignInScreen = () =>{
       style={styles.container}
     >
       <View style={{backgroundColor: 'white', flex: 1} }>
-        <Spacer/>
         <ImageBackground source={require('../../assets/signInBackground.png')}
           imageStyle={{resizeMode: 'cover'}} style={style.backGroundImg}>
           <Image style={{alignSelf: 'center', width: 280, marginBottom: 5, marginRight: 20,
